@@ -5,10 +5,25 @@ class Cuenta {
 public:
     string titular;
     string numCuenta;
-  
-//private:
     float saldo;
-    //private interes;
+
+public:
+    void ingresar(float cantidad){
+        saldo+=cantidad;
+    }
+
+    void reintegrar(float cantidad){
+        if (saldo < cantidad || cantidad < 0) return false;
+        {
+            saldo = saldo -cantidad;
+            return true;
+        }
+        
+        
+    }
+
+
+
 };
 
 void mostrar(Cuenta  cuentaAMostrar){ // mostrar cuenta por pantalla, como es mostrar y no modifico lo paso como copia
@@ -61,9 +76,9 @@ cout << "bienvenido al banco" <<endl;
     (*c).saldo = 10.04 ;
 
     mostrar(*c);
-    ingresar(c,50);
+    c.reintegrar(500); // reintegrar (&una,500);
     mostrar(*c);
-    if (reintegrar(c,3434))
+    if (c.reintegrar(2000))
     {
         mostrar(*c);
     }else
