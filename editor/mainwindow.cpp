@@ -4,6 +4,9 @@
 #include <QMessageBox>
 #include <QMenu>
 #include <QAction>
+#include <QToolBar>
+#include <QLabel>
+
 
 VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
 
@@ -13,6 +16,9 @@ VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : Q
         crearQActions();
         
         crearMenus();
+        crearBarras();
+        crearBarraEstado();
+        
         
     	setWindowIcon(QIcon(":/images/icon.png"));
     
@@ -42,6 +48,17 @@ void VentanaPrincipal::crearQActions(){
         accionGuardar = new QAction("Guardar",this);
         accionGuardar -> setShortcut(QKeySequence::Save);
         
+        accion1 = new QAction("icon",this);
+        accion1->setIcon(QIcon(":/images/icon.png"));
+        
+        accion2 = new QAction("new",this);
+        accion2->setIcon(QIcon(":/images/new.png"));
+        
+        accion3 = new QAction("cara",this);
+        accion3->setIcon(QIcon(":/images/cara.png"));
+        
+        
+        
         
         
         connect(accionSalir, SIGNAL(triggered()),this, SLOT(slotCerrar()));
@@ -51,6 +68,11 @@ void VentanaPrincipal::crearQActions(){
         connect(accionNuevo, SIGNAL(triggered()),this,SLOT(slotNuevo()));
         connect(editorCentral, SIGNAL(textChanged()),this,SLOT(slotComprobar()));
         connect(accionGuardar, SIGNAL(triggered()),this, SLOT(slotGuardar()));
+        connect(accion1, SIGNAL(triggered()),this,SLOT(slotMostrarIcono()));
+        connect(accion2, SIGNAL(triggered()),this,SLOT(slotMostrarIcono()));
+        connect(accion3, SIGNAL(triggered()),this,SLOT(slotMostrarIcono()));
+        connect(editorCentral, SIGNAL(cursorPositionChanged()),this,SLOT(slotCambioEstado()));
+        connect(editorCentral, SIGNAL(textChanged()),this,SLOT(slotEncontrarPalabra()));
         
         
         
@@ -68,6 +90,35 @@ void VentanaPrincipal::crearMenus(){
 	menuEditar->addAction(accionCortar);
 	menuEditar->addAction(accionPegar);
 	
+	editorCentral->addAction(accionNuevo);
+	editorCentral->setContextMenuPolicy(Qt::ActionsContextMenu);
+	
+	
+	
+}
+
+void VentanaPrincipal::crearBarras(){
+	
+	
+	
+	barraPrincipal = this->addToolBar("Barra");
+	barraPrincipal -> addAction(accion1);
+	barraPrincipal -> addAction(accion2);
+	barraPrincipal -> addAction(accion3);
+
+}
+
+void VentanaPrincipal::crearBarraEstado(){
+	parrafo = new QLabel("Parrafo: 1");
+	fila = new QLabel("Fila: 1");
+	columna = new QLabel("Columna: 1");
+	labels.append(parrafo);
+	labels.append(fila);
+	labels.append(columna);
+	
+	for(int i = 0; i < labels.size(); i++){
+		statusBar() -> addWidget(labels.value(i));
+	}
 	
 	
 }
@@ -130,6 +181,33 @@ void VentanaPrincipal::slotGuardar(void){
 void VentanaPrincipal::slotComprobar(void){
 	
 	guardar = false;
+}
+
+void VentanaPrincipal::slotMostrarIcono(void){
+	QAction * accionRecogida = qobject_cast<QAction*>(sender());
+
+	editorCentral -> append(accionRecogida->text());
+}
+
+void VentanaPrincipal::slotCambioEstado(void){
+	QTextCursor cursor = editorCentral -> textCursor();
+
+	parrafo->setText("Parrafo: "+QString::number(editorCentral->document()->blockCount()));
+	columna->setText("Columna: "+QString::number(cursor.columnNumber()+1));
+	fila->setText("Fila: "+QString::number(cursor.blockNumber()+1));
+	
+}
+
+void VentanaPrincipal::slotEncontrarPalabra(void){
+	QTextCursor cursor = editorCentral->document()->find("coche",0);
+	QAction * coche = new QAction(this);
+	if(!cursor.isNull()){
+		
+		coche->setIcon(QIcon(":/images/coche.png"));
+		barraPrincipal->addAction(coche);
+	}else{
+		coche->setVisible(false);
+	}
 }
 
 
