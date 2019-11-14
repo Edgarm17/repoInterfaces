@@ -6,7 +6,11 @@
 #include <QAction>
 #include <QToolBar>
 #include <QLabel>
-
+#include <QFileDialog>
+#include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QTextBlock>
 
 VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
 
@@ -14,6 +18,8 @@ VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : Q
         editorCentral = new QTextEdit(this);
         setCentralWidget(editorCentral);
         crearQActions();
+        fichero = new QFile("");
+        nombreFichero = new QString(fichero->fileName());
         
         crearMenus();
         crearBarras();
@@ -48,6 +54,9 @@ void VentanaPrincipal::crearQActions(){
         accionGuardar = new QAction("Guardar",this);
         accionGuardar -> setShortcut(QKeySequence::Save);
         
+        accionGuardarComo = new QAction("Guardar Como",this);
+        accionGuardarComo -> setShortcut(QKeySequence::SaveAs);
+        
         accion1 = new QAction("icon",this);
         accion1->setIcon(QIcon(":/images/icon.png"));
         
@@ -57,6 +66,8 @@ void VentanaPrincipal::crearQActions(){
         accion3 = new QAction("cara",this);
         accion3->setIcon(QIcon(":/images/cara.png"));
         
+        accionAbrir = new QAction("Abrir archivo",this);
+        accionAbrir->setShortcut(QKeySequence::Open);
         
         
         
@@ -73,7 +84,8 @@ void VentanaPrincipal::crearQActions(){
         connect(accion3, SIGNAL(triggered()),this,SLOT(slotMostrarIcono()));
         connect(editorCentral, SIGNAL(cursorPositionChanged()),this,SLOT(slotCambioEstado()));
         connect(editorCentral, SIGNAL(textChanged()),this,SLOT(slotEncontrarPalabra()));
-        
+        connect(accionAbrir, SIGNAL(triggered()),this,SLOT(slotAbrir()));
+        connect(accionGuardarComo, SIGNAL(triggered()),this, SLOT(slotGuardarComo()));
         
         
 }
@@ -84,6 +96,8 @@ void VentanaPrincipal::crearMenus(){
         menuArchivo ->addAction(accionSalir);
         menuArchivo ->addAction(accionNuevo);
         menuArchivo -> addAction(accionGuardar);
+        menuArchivo -> addAction(accionAbrir);
+        menuArchivo -> addAction(accionGuardarComo);
         
         menuEditar = menuBar()->addMenu("Editar");
 	menuEditar->addAction(accionCopiar);
@@ -125,8 +139,14 @@ void VentanaPrincipal::crearBarraEstado(){
 
 void VentanaPrincipal::slotCerrar(void){
 	
+	if(!guardar){
+      		slotGuardar();
+      		this->close();
+      	}else{
+      		this->close();
+      	}
 
-	this -> close();
+	
 }
 
 void VentanaPrincipal::slotCopiar(void){
@@ -150,7 +170,8 @@ void VentanaPrincipal::slotNuevo(void){
 		
 	
 	if(guardar){
-	
+		delete fichero;
+		fichero = new QFile("");
 		editorCentral -> clear();
 		
 	}else{
@@ -173,9 +194,50 @@ void VentanaPrincipal::slotNuevo(void){
 }
 
 void VentanaPrincipal::slotGuardar(void){
+
+	
+	if(!fichero->exists()){
+		QString ruta = QFileDialog::getSaveFileName(this,QString("Guardar documentillo"));
+		delete fichero;
+		fichero = new QFile(ruta);
+	}
+	
+	QTextStream stream(fichero);
+	if(!fichero->open(QIODevice::WriteOnly)){
+		qDebug() << "Algo va mal en el fichero";
+		return;
+	}
+
+	for(int i = 0; i< editorCentral->document()->blockCount();i++){
+	
+		stream << editorCentral->document()->findBlockByNumber(i).text() << endl;
+	}
+	
 	guardar = true;
+	fichero->close();
 	
 	
+}
+
+void VentanaPrincipal::slotGuardarComo(void){
+	
+	QString ruta = QFileDialog::getSaveFileName(this,QString("Guardar documentillo"));
+	delete fichero;
+	fichero = new QFile(ruta);
+	
+	QTextStream stream(fichero);
+	if(!fichero->open(QIODevice::WriteOnly)){
+		qDebug() << "Algo va mal en el fichero";
+		return;
+	}
+
+	for(int i = 0; i< editorCentral->document()->blockCount();i++){
+	
+		stream << editorCentral->document()->findBlockByNumber(i).text() << endl;
+	}
+	
+	guardar = true;
+	fichero->close();
 }
 
 void VentanaPrincipal::slotComprobar(void){
@@ -208,6 +270,47 @@ void VentanaPrincipal::slotEncontrarPalabra(void){
 	}else{
 		coche->setVisible(false);
 	}
+}
+
+void VentanaPrincipal::slotAbrir(void){
+	qDebug() << "Antes de abrir el dialogo";
+	QString ruta = QFileDialog::getOpenFileName(this,QString("abrir documentillo"));
+	
+	qDebug() << "Fichero: " << ruta;
+	
+	
+	editorCentral ->  clear();
+	
+	fichero = new QFile(ruta);
+	
+	if(!fichero->open(QIODevice::ReadOnly)){
+		qDebug() << "Algo va mal en el fichero";
+		return;
+	}
+	
+	
+	
+	QTextStream stream(fichero);
+	QString linea;
+	while (stream.readLineInto(&linea)){
+		editorCentral->append(linea);
+	}
+	
+	
+	fichero->close();
+	
+	
+	
+}
+
+void VentanaPrincipal::closeEvent(QCloseEvent *event){
+      if(!guardar){
+      	slotGuardar();
+      	this->close();
+      }else{
+      	this->close();
+      }
+      
 }
 
 

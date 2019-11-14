@@ -6,7 +6,7 @@
 #include <QAction>
 #include <QMenu>
 #include <QLabel>
-
+#include <QFile>
 
 class VentanaPrincipal : public QMainWindow {
 Q_OBJECT
@@ -25,6 +25,8 @@ private:
         QAction * accion1;
         QAction * accion2;
         QAction * accion3;
+        QAction * accionAbrir;
+        QAction * accionGuardarComo;
         QMenu * menuArchivo;
         QMenu * menuEditar;
         QToolBar * barraPrincipal;
@@ -32,10 +34,13 @@ private:
         QLabel * parrafo;
         QLabel * fila;
         QLabel * columna;
+        QFile * fichero;
+        QString * nombreFichero;
         void crearBarraEstado();
         void crearQActions();
         void crearMenus();
         void crearBarras();
+        void closeEvent(QCloseEvent *event);
         bool guardar;
         
         
@@ -47,9 +52,12 @@ public slots:
 	void slotNuevo();
 	void slotComprobar();
 	void slotGuardar();
+	void slotGuardarComo();
 	void slotMostrarIcono();
 	void slotCambioEstado();
 	void slotEncontrarPalabra();
+	void slotAbrir();
+	
 
 };
 
