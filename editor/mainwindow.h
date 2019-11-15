@@ -27,6 +27,7 @@ private:
         QAction * accion3;
         QAction * accionAbrir;
         QAction * accionGuardarComo;
+        QAction * accionDialogo;
         QMenu * menuArchivo;
         QMenu * menuEditar;
         QToolBar * barraPrincipal;
@@ -42,6 +43,7 @@ private:
         void crearBarras();
         void closeEvent(QCloseEvent *event);
         bool guardar;
+        bool archivoAbierto;
         
         
 public slots:
@@ -57,6 +59,7 @@ public slots:
 	void slotCambioEstado();
 	void slotEncontrarPalabra();
 	void slotAbrir();
+	void slotDialogo();
 	
 
 };

@@ -12,6 +12,8 @@
 #include <QTextStream>
 #include <QTextBlock>
 
+#include "DBuscarReemplazar.h"
+
 VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
 
 	guardar = false;
@@ -20,6 +22,7 @@ VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : Q
         crearQActions();
         fichero = new QFile("");
         nombreFichero = new QString(fichero->fileName());
+        archivoAbierto = false;
         
         crearMenus();
         crearBarras();
@@ -69,6 +72,9 @@ void VentanaPrincipal::crearQActions(){
         accionAbrir = new QAction("Abrir archivo",this);
         accionAbrir->setShortcut(QKeySequence::Open);
         
+        accionDialogo = new QAction("Buscar y reemplazar",this);
+        
+        
         
         
         
@@ -86,6 +92,7 @@ void VentanaPrincipal::crearQActions(){
         connect(editorCentral, SIGNAL(textChanged()),this,SLOT(slotEncontrarPalabra()));
         connect(accionAbrir, SIGNAL(triggered()),this,SLOT(slotAbrir()));
         connect(accionGuardarComo, SIGNAL(triggered()),this, SLOT(slotGuardarComo()));
+        connect(accionDialogo, SIGNAL(triggered()),this, SLOT(slotDialogo()));
         
         
 }
@@ -98,6 +105,7 @@ void VentanaPrincipal::crearMenus(){
         menuArchivo -> addAction(accionGuardar);
         menuArchivo -> addAction(accionAbrir);
         menuArchivo -> addAction(accionGuardarComo);
+        menuArchivo -> addAction(accionDialogo);
         
         menuEditar = menuBar()->addMenu("Editar");
 	menuEditar->addAction(accionCopiar);
@@ -236,6 +244,7 @@ void VentanaPrincipal::slotGuardarComo(void){
 		stream << editorCentral->document()->findBlockByNumber(i).text() << endl;
 	}
 	
+	
 	guardar = true;
 	fichero->close();
 }
@@ -296,6 +305,7 @@ void VentanaPrincipal::slotAbrir(void){
 		editorCentral->append(linea);
 	}
 	
+	archivoAbierto = true;
 	
 	fichero->close();
 	
@@ -304,13 +314,20 @@ void VentanaPrincipal::slotAbrir(void){
 }
 
 void VentanaPrincipal::closeEvent(QCloseEvent *event){
-      if(!guardar){
+      if(!guardar && archivoAbierto){
       	slotGuardar();
       	this->close();
       }else{
       	this->close();
       }
       
+}
+
+void VentanaPrincipal::slotDialogo(void){
+	QString palabra = editorCentral ->textCursor().selectedText();
+	DBuscarReemplazar * dialogo = new DBuscarReemplazar(palabra);
+	
+	dialogo->show();
 }
 
 
