@@ -28,6 +28,7 @@ private:
         QAction * accionAbrir;
         QAction * accionGuardarComo;
         QAction * accionDialogo;
+        QAction * accionExamen;
         QMenu * menuArchivo;
         QMenu * menuEditar;
         QToolBar * barraPrincipal;
@@ -60,7 +61,7 @@ public slots:
 	void slotEncontrarPalabra();
 	void slotAbrir();
 	void slotDialogo();
-	
+	void slotExamen();
 
 };
 

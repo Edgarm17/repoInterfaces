@@ -13,6 +13,7 @@
 #include <QTextBlock>
 
 #include "DBuscarReemplazar.h"
+#include "DialogExamen.h"
 
 VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
 
@@ -74,6 +75,8 @@ void VentanaPrincipal::crearQActions(){
         
         accionDialogo = new QAction("Buscar y reemplazar",this);
         
+        accionExamen = new QAction("Examen",this);
+        
         
         
         
@@ -93,6 +96,7 @@ void VentanaPrincipal::crearQActions(){
         connect(accionAbrir, SIGNAL(triggered()),this,SLOT(slotAbrir()));
         connect(accionGuardarComo, SIGNAL(triggered()),this, SLOT(slotGuardarComo()));
         connect(accionDialogo, SIGNAL(triggered()),this, SLOT(slotDialogo()));
+        connect(accionExamen, SIGNAL(triggered()),this, SLOT(slotExamen()));
         
         
 }
@@ -111,6 +115,7 @@ void VentanaPrincipal::crearMenus(){
 	menuEditar->addAction(accionCopiar);
 	menuEditar->addAction(accionCortar);
 	menuEditar->addAction(accionPegar);
+	menuEditar->addAction(accionExamen);
 	
 	editorCentral->addAction(accionNuevo);
 	editorCentral->setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -328,6 +333,12 @@ void VentanaPrincipal::slotDialogo(void){
 	DBuscarReemplazar * dialogo = new DBuscarReemplazar(palabra);
 	
 	dialogo->show();
+}
+
+void VentanaPrincipal::slotExamen(void){
+	DialogExamen * dialogo1 = new DialogExamen();
+	
+	dialogo1->show();
 }
 
 
