@@ -7,8 +7,10 @@ class Bola{
 
 public:
         Bola(float , float , float , float );
-	void pintarBola(QPainter &);
-	
+	void pintarBola(QPainter &, float, float);
+	void mover(float, float);
+	void chocar(Bola &);
+	float calcDistancia(Bola );
 
 private:
         float x;

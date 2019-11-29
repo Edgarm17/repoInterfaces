@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <QVector>
+#include <QRandomGenerator>
 class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
@@ -19,9 +20,11 @@ private:
 	int posY;
 	float velX;
 	float velY;
+	Bola * b;
+	QRandomGenerator generador;
 
 	QVector<Bola*> bolas;
-	void cargarBolas(QVector<Bola*> bolas);
+	
         
 public slots:
 
