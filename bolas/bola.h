@@ -6,8 +6,9 @@
 class Bola{
 
 public:
-        Bola(float , float , float , float );
-	void pintarBola(QPainter &, float, float);
+        Bola(bool, float , float , float , float, float );
+        Bola(bool, float , float , float , float, float, QColor );
+	void pintarBola(QPainter &);
 	void mover(float, float);
 	void chocar(Bola &);
 	float calcDistancia(Bola );
@@ -17,6 +18,9 @@ private:
 	float y;
 	float vX;
 	float vY;
+	float radio;
+	bool jugador;
+	QColor color;
 
 
 };

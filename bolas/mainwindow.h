@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPaintEvent>
+#include <QAction>
 #include <bola.h>
 #include <iostream>
 #include <stdio.h>
@@ -16,19 +17,25 @@ public:
 	
 
 private:
-        int posX;
-	int posY;
+        float posX;
+	float posY;
 	float velX;
 	float velY;
-	Bola * b;
+	float radio;
+	void crearQActions();
+	void crearMenus();
+	
+	QAction * accionDialogo;
+	QMenu * menuArchivo;
 	QRandomGenerator generador;
-
+	Bola * jugador;
 	QVector<Bola*> bolas;
 	
         
 public slots:
 
 	void slotRepintar();
+	void slotDialogo();
 	
 };
 

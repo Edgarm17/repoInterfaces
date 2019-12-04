@@ -2,17 +2,44 @@
 #include <math.h>
 #include <QPainter>
 
-Bola::Bola(float  posX, float  posY, float velX, float velY)
+Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad)
 {
+	jugador = esJugador;
 	x = posX;
 	y = posY;
 	vX = velX;
 	vY = velY;
+	radio = rad;
+	color = QColor(rand()%256,rand()%256,rand()%256);
 	
 }
 
-void Bola::pintarBola(QPainter & pintor, float ancho, float alto){
-	pintor.drawEllipse(x,y,ancho,alto);
+Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad, QColor col) :
+	 Bola(esJugador,posX,posY,velX,velY,radio)
+{
+	jugador = esJugador;
+	x = posX;
+	y = posY;
+	vX = velX;
+	vY = velY;
+	radio = rad;
+	
+	color = col;
+	
+}
+
+void Bola::pintarBola(QPainter & pintor){
+
+	if(jugador){
+		pintor.setBrush((QBrush(Qt::black)));
+		pintor.setPen(Qt::red);
+		pintor.drawEllipse(x,y,radio,radio);
+	}else{
+		pintor.setBrush(color);
+		pintor.drawEllipse(x,y,radio,radio);
+	}
+
+	
     	
     	
     	
@@ -21,7 +48,7 @@ void Bola::pintarBola(QPainter & pintor, float ancho, float alto){
 void Bola::mover(float altura, float anchura){
 	/*Rebotes izquierda y derecha*/
     	
-    	if(x > anchura-20){
+    	if(x > anchura-radio){
     		vX = -fabs(vX);
     	}
     	
@@ -34,7 +61,7 @@ void Bola::mover(float altura, float anchura){
     	
     	/*Rebotes arriba y abajo*/
     	
-    	if(y > altura-20){
+    	if(y > altura-radio){
     		vY = -fabs(vY);
     	}
     	
@@ -50,8 +77,19 @@ void Bola::chocar(Bola & otra){
 	Bola * derecha;
 	Bola * arriba;
 	Bola * abajo;
+	//Bola * grande;
+	//Bola * pequena;
+	
+	//if(radio >= otra.radio){
+	//	grande = this;
+	//pequena = &otra;
+	//}else{
+	//	grande = &otra;
+	//	pequena = this;
+	//}
+	
 
-	if(calcDistancia(otra) > 20) return;
+	if(calcDistancia(otra) > (radio+otra.radio)/2) return;
 	
 	/* CHOQUE HORIZONTAL*/
 	
@@ -80,7 +118,7 @@ void Bola::chocar(Bola & otra){
 		abajo = this;
 	}
 	
-	if(abajo->vY > arriba->vY){
+	if(arriba->vY > abajo->vY){
 		float aux = abajo -> vY;
 		abajo->vY = arriba -> vY;
 		arriba->vY = aux;
@@ -91,7 +129,7 @@ void Bola::chocar(Bola & otra){
 float Bola::calcDistancia(Bola otra){
 	float distancia;
 	
-	distancia = sqrt((powf(otra.x - x,2))+(powf(otra.y - y,2)));
+	distancia = sqrtf((powf(otra.x - x,2))+(powf(otra.y - y,2)));
 	
 	return distancia;
 }
