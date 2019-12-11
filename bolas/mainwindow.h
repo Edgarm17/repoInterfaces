@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPaintEvent>
+#include <QKeyEvent>
 #include <QAction>
 #include <bola.h>
 #include <iostream>
@@ -14,6 +15,8 @@ Q_OBJECT
 public:
         MainWindow(QWidget * parent = 0, Qt::WindowFlags flags = 0);
 	void paintEvent(QPaintEvent * );
+	void keyPressEvent(QKeyEvent * e);
+	void mouseDoubleClickEvent(QMouseEvent * e);
 	
 
 private:
@@ -24,6 +27,7 @@ private:
 	float radio;
 	void crearQActions();
 	void crearMenus();
+	int vidasJugador;
 	
 	QAction * accionDialogo;
 	QMenu * menuArchivo;

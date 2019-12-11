@@ -10,10 +10,11 @@ public:
         Bola(bool, float , float , float , float, float, QColor );
 	void pintarBola(QPainter &);
 	void mover(float, float);
-	void chocar(Bola &);
+	bool chocar(Bola &);
 	float calcDistancia(Bola );
+	static const int vidaInicial = 100;
 
-private:
+	int vida;
         float x;
 	float y;
 	float vX;
@@ -21,7 +22,7 @@ private:
 	float radio;
 	bool jugador;
 	QColor color;
-
+private:
 
 };
 

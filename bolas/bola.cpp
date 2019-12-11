@@ -10,6 +10,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vX = velX;
 	vY = velY;
 	radio = rad;
+	vida = vidaInicial;
 	color = QColor(rand()%256,rand()%256,rand()%256);
 	
 }
@@ -23,7 +24,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vX = velX;
 	vY = velY;
 	radio = rad;
-	
+	vida = vidaInicial;
 	color = col;
 	
 }
@@ -72,7 +73,10 @@ void Bola::mover(float altura, float anchura){
     	y = y + vY;
 }
 
-void Bola::chocar(Bola & otra){
+bool Bola::chocar(Bola & otra){
+	
+	bool choque = false;
+	
 	Bola * izquierda;
 	Bola * derecha;
 	Bola * arriba;
@@ -89,7 +93,7 @@ void Bola::chocar(Bola & otra){
 	//}
 	
 
-	if(calcDistancia(otra) > (radio+otra.radio)/2) return;
+	if(calcDistancia(otra) > (radio+otra.radio)/2) return false;
 	
 	/* CHOQUE HORIZONTAL*/
 	
@@ -106,6 +110,7 @@ void Bola::chocar(Bola & otra){
 		float aux = izquierda -> vX;
 		izquierda->vX = derecha->vX;
 		derecha->vX = aux;
+		choque = true;
 	}
 	
 	/*CHOQUE VERTICAL*/
@@ -122,8 +127,10 @@ void Bola::chocar(Bola & otra){
 		float aux = abajo -> vY;
 		abajo->vY = arriba -> vY;
 		arriba->vY = aux;
+		choque = true;
 	}	
 
+	return choque;
 }
 
 float Bola::calcDistancia(Bola otra){
