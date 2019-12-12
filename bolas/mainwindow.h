@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPaintEvent>
 #include <QKeyEvent>
+#include <QMouseEvent>
 #include <QAction>
 #include <bola.h>
 #include <iostream>
@@ -17,7 +18,10 @@ public:
 	void paintEvent(QPaintEvent * );
 	void keyPressEvent(QKeyEvent * e);
 	void mouseDoubleClickEvent(QMouseEvent * e);
-	
+	void mousePressEvent(QMouseEvent *e);
+	void mouseReleaseEvent(QMouseEvent *e);
+	void mouseMoveEvent(QMouseEvent *e);
+	void moverJugadorRaton(void);
 
 private:
         float posX;
@@ -25,10 +29,13 @@ private:
 	float velX;
 	float velY;
 	float radio;
+	float posRatonX;
+	float posRatonY;
 	void crearQActions();
 	void crearMenus();
 	int vidasJugador;
 	
+	QMouseEvent * eventoInicial;
 	QAction * accionDialogo;
 	QMenu * menuArchivo;
 	QRandomGenerator generador;

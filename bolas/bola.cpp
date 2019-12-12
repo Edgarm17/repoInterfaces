@@ -66,7 +66,7 @@ void Bola::mover(float altura, float anchura){
     		vY = -fabs(vY);
     	}
     	
-    	if(y <= 0 ){
+    	if(y <= 20 ){
     		vY = fabs(vY);
     	}
     	

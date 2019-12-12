@@ -19,8 +19,10 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	temporizador->start();
 	/*arrancar el temporizador*/
 	
+	
 	crearQActions();
 	crearMenus();
+	
 	connect(temporizador,SIGNAL(timeout()),this, SLOT(slotRepintar()));
 	
 	resize(800,600);
@@ -37,7 +39,12 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 		bolas.append(new Bola(false,posX,posY,velX,velY,radio));
 	}
 	
+	posX = posY = 20;
+	
     	jugador = new Bola(true,posX,posY,0.0,0.0,80);
+    	
+    	
+    	setMouseTracking(true);
     	
 }
 
@@ -132,17 +139,71 @@ void MainWindow::keyPressEvent(QKeyEvent * e){
 	
 }
 
+void MainWindow::mousePressEvent(QMouseEvent * e){
+
+	eventoInicial = new QMouseEvent(*e);	
+
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *e){
+	
+	if(eventoInicial == NULL)return;
+	
+	QMouseEvent * eventoFinal = e;
+	
+	if(eventoInicial->x()+eventoInicial->y() == eventoFinal->x()+eventoFinal->y())return;
+	
+	float radio = 50;
+	float pInicialX = eventoInicial->x() - radio/2;
+	float pInicialY = eventoInicial->y() - radio/2;
+	float pFinalX = eventoFinal->x();
+	float pFinalY = eventoFinal->y();
+	float vX = (eventoFinal->x() - eventoInicial->x()) / 50.2;
+	float vY = (eventoFinal->y() - eventoInicial->y()) / 50.3;
+	
+	
+	Bola * newBola = new Bola(false,pInicialX,pInicialY,vX,vY,radio);
+	
+	bolas.append(newBola);
+	
+}
+
 void MainWindow::mouseDoubleClickEvent(QMouseEvent * e){
 	float mouseX, mouseY;
 	float radio = 50;
 	mouseX = e->x()-radio;
 	mouseY = e->y()-radio;
+	float velX = (rand()%100-50)/50.1;
+	float velY = (rand()%100-50)/50.1;
 	
-	
-	Bola * newBola = new Bola(false,(float)mouseX,(float)mouseY,(float)3.0,(float)3.0,radio);
+	Bola * newBola = new Bola(false,(float)mouseX,(float)mouseY,velX,velY,radio);
 	bolas.append(newBola);
 }
 
+void MainWindow::mouseMoveEvent(QMouseEvent * e){
+
+	
+
+}
+
+void MainWindow::moverJugadorRaton(void){
+
+	posRatonX = QWidget::mapFromGlobal(QCursor::pos()).x();
+	posRatonY = QWidget::mapFromGlobal(QCursor::pos()).y();
+	
+	float incVelx = (posRatonX - jugador->x);
+	incVelx = pow((incVelx * 0.0012),3);
+	float incVely = (posRatonY - jugador->y);
+	incVely = pow((incVely * 0.0012),3);
+	
+	jugador->vX += incVelx;
+	jugador->vY += incVely;
+	
+	jugador->vX = jugador->vX * 0.99;
+	jugador->vY = jugador->vY * 0.99;
+	
+	
+}
 
 void MainWindow::slotDialogo(void){
 	
@@ -171,11 +232,12 @@ void MainWindow::slotRepintar(void){
 		
 	}
 	
-	
-	
+	moverJugadorRaton();
 		
 	
 }
+
+
 
 
 
