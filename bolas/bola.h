@@ -12,7 +12,7 @@ public:
 	void mover(float, float);
 	bool chocar(Bola &);
 	float calcDistancia(Bola );
-	static const int vidaInicial = 100;
+	static const int vidaInicial = 1000;
 
 	int vida;
         float x;

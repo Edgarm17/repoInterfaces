@@ -37,7 +37,9 @@ private:
 	
 	QMouseEvent * eventoInicial;
 	QAction * accionDialogo;
+	QAction * accionExamen;
 	QMenu * menuArchivo;
+	QMenu * menuDialogos;
 	QRandomGenerator generador;
 	Bola * jugador;
 	QVector<Bola*> bolas;
@@ -47,7 +49,7 @@ public slots:
 
 	void slotRepintar();
 	void slotDialogo();
-	
+	void slotExamen();
 };
 
 #endif 

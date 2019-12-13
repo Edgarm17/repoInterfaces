@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <QVector>
 #include "bola.h"
+#include "DExamenDAM.h"
 #include <QDebug>
 #include <QAction>
 #include <QMenuBar>
@@ -51,15 +52,20 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 void MainWindow::crearQActions(){
 	accionDialogo = new QAction("Información",this);
 	connect(accionDialogo, SIGNAL(triggered()),this, SLOT(slotDialogo()));
+	
+	accionExamen = new QAction("Examen",this);
+	connect(accionExamen, SIGNAL(triggered()),this, SLOT(slotExamen()));
 }
 
 void MainWindow::crearMenus(){
 
 	menuArchivo = menuBar()->addMenu("Archivo");
+	menuDialogos = menuBar()->addMenu("Dialogos");
         menuArchivo ->addAction(accionDialogo);
+        menuDialogos->addAction(accionExamen);
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
         this->addAction(accionDialogo);
-	
+	this->addAction(accionExamen);
 	
 	
 }
@@ -235,6 +241,11 @@ void MainWindow::slotRepintar(void){
 	moverJugadorRaton();
 		
 	
+}
+
+void MainWindow::slotExamen(void){
+	DExamenDAM * dialogo = new DExamenDAM(bolas);
+	dialogo->show();
 }
 
 
