@@ -8,6 +8,7 @@
 #include <QVector>
 #include "bola.h"
 #include "DExamenDAM.h"
+#include "DialogoTabla.h"
 #include <QDebug>
 #include <QAction>
 #include <QMenuBar>
@@ -55,6 +56,9 @@ void MainWindow::crearQActions(){
 	
 	accionExamen = new QAction("Examen",this);
 	connect(accionExamen, SIGNAL(triggered()),this, SLOT(slotExamen()));
+	
+	accionTabla = new QAction("Tabla de información",this);
+	connect(accionTabla, SIGNAL(triggered()),this, SLOT(slotInfoTabla()));
 }
 
 void MainWindow::crearMenus(){
@@ -63,9 +67,11 @@ void MainWindow::crearMenus(){
 	menuDialogos = menuBar()->addMenu("Dialogos");
         menuArchivo ->addAction(accionDialogo);
         menuDialogos->addAction(accionExamen);
+        menuDialogos->addAction(accionTabla);
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
         this->addAction(accionDialogo);
 	this->addAction(accionExamen);
+	this->addAction(accionTabla);
 	
 	
 }
@@ -247,6 +253,24 @@ void MainWindow::slotExamen(void){
 	DExamenDAM * dialogo = new DExamenDAM(bolas);
 	dialogo->show();
 }
+
+void MainWindow::slotInfoTabla(void){
+
+	DialogoTabla * dialogo = new DialogoTabla(&bolas);
+	dialogo->show();	
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

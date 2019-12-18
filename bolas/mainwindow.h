@@ -38,6 +38,7 @@ private:
 	QMouseEvent * eventoInicial;
 	QAction * accionDialogo;
 	QAction * accionExamen;
+	QAction * accionTabla;
 	QMenu * menuArchivo;
 	QMenu * menuDialogos;
 	QRandomGenerator generador;
@@ -50,6 +51,7 @@ public slots:
 	void slotRepintar();
 	void slotDialogo();
 	void slotExamen();
+	void slotInfoTabla();
 };
 
 #endif 

@@ -54,17 +54,21 @@ OBJECTS_DIR   = ./
 
 SOURCES       = bola.cpp \
 		DExamenDAM.cpp \
+		DialogoTabla.cpp \
 		InfoDialog.cpp \
 		main.cpp \
 		mainwindow.cpp moc_DExamenDAM.cpp \
+		moc_DialogoTabla.cpp \
 		moc_InfoDialog.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = bola.o \
 		DExamenDAM.o \
+		DialogoTabla.o \
 		InfoDialog.o \
 		main.o \
 		mainwindow.o \
 		moc_DExamenDAM.o \
+		moc_DialogoTabla.o \
 		moc_InfoDialog.o \
 		moc_mainwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -148,9 +152,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		bolas.pro bola.h \
 		DExamenDAM.h \
+		DialogoTabla.h \
 		InfoDialog.h \
 		mainwindow.h bola.cpp \
 		DExamenDAM.cpp \
+		DialogoTabla.cpp \
 		InfoDialog.cpp \
 		main.cpp \
 		mainwindow.cpp
@@ -162,7 +168,7 @@ TARGET        = bolas
 first: all
 ####### Build rules
 
-bolas: ui_DExamenDAM.h ui_InfoDialog.h $(OBJECTS)  
+bolas: ui_DExamenDAM.h ui_DialogoTabla.h ui_InfoDialog.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: bolas.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -347,9 +353,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents bola.h DExamenDAM.h InfoDialog.h mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents bola.cpp DExamenDAM.cpp InfoDialog.cpp main.cpp mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents DExamenDAM.ui InfoDialog.ui $(DISTDIR)/
+	$(COPY_FILE) --parents bola.h DExamenDAM.h DialogoTabla.h InfoDialog.h mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents bola.cpp DExamenDAM.cpp DialogoTabla.cpp InfoDialog.cpp main.cpp mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents DExamenDAM.ui DialogoTabla.ui InfoDialog.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -381,14 +387,22 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_DExamenDAM.cpp moc_InfoDialog.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_DExamenDAM.cpp moc_InfoDialog.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp
 moc_DExamenDAM.cpp: DExamenDAM.h \
 		ui_DExamenDAM.h \
+		bola.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DExamenDAM.h -o moc_DExamenDAM.cpp
+
+moc_DialogoTabla.cpp: DialogoTabla.h \
+		ui_DialogoTabla.h \
+		bola.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DialogoTabla.h -o moc_DialogoTabla.cpp
 
 moc_InfoDialog.cpp: InfoDialog.h \
 		ui_InfoDialog.h \
@@ -406,12 +420,16 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_DExamenDAM.h ui_InfoDialog.h
+compiler_uic_make_all: ui_DExamenDAM.h ui_DialogoTabla.h ui_InfoDialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_DExamenDAM.h ui_InfoDialog.h
+	-$(DEL_FILE) ui_DExamenDAM.h ui_DialogoTabla.h ui_InfoDialog.h
 ui_DExamenDAM.h: DExamenDAM.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic DExamenDAM.ui -o ui_DExamenDAM.h
+
+ui_DialogoTabla.h: DialogoTabla.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic DialogoTabla.ui -o ui_DialogoTabla.h
 
 ui_InfoDialog.h: InfoDialog.ui \
 		/usr/lib/qt5/bin/uic
@@ -431,8 +449,14 @@ bola.o: bola.cpp bola.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bola.o bola.cpp
 
 DExamenDAM.o: DExamenDAM.cpp DExamenDAM.h \
-		ui_DExamenDAM.h
+		ui_DExamenDAM.h \
+		bola.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DExamenDAM.o DExamenDAM.cpp
+
+DialogoTabla.o: DialogoTabla.cpp DialogoTabla.h \
+		ui_DialogoTabla.h \
+		bola.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DialogoTabla.o DialogoTabla.cpp
 
 InfoDialog.o: InfoDialog.cpp InfoDialog.h \
 		ui_InfoDialog.h
@@ -447,11 +471,16 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		InfoDialog.h \
 		ui_InfoDialog.h \
 		DExamenDAM.h \
-		ui_DExamenDAM.h
+		ui_DExamenDAM.h \
+		DialogoTabla.h \
+		ui_DialogoTabla.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 moc_DExamenDAM.o: moc_DExamenDAM.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DExamenDAM.o moc_DExamenDAM.cpp
+
+moc_DialogoTabla.o: moc_DialogoTabla.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DialogoTabla.o moc_DialogoTabla.cpp
 
 moc_InfoDialog.o: moc_InfoDialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_InfoDialog.o moc_InfoDialog.cpp
