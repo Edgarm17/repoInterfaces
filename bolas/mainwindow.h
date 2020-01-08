@@ -38,6 +38,7 @@ private:
 	QAction * accionDialogo;
 	QAction * accionExamen;
 	QAction * accionTabla;
+	QAction * accionControlBolas;
 	QMenu * menuArchivo;
 	QMenu * menuDialogos;
 	Bola * jugador;
@@ -50,6 +51,7 @@ public slots:
 	void slotDialogo();
 	void slotExamen();
 	void slotInfoTabla();
+	void slotDControlBolas();
 };
 
 #endif 

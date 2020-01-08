@@ -9,6 +9,7 @@
 #include "bola.h"
 #include "DExamenDAM.h"
 #include "DialogoTabla.h"
+#include "DControlBolas.h"
 #include <QDebug>
 #include <QAction>
 #include <QMenuBar>
@@ -37,7 +38,7 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 		velY = 3;
 		posX = rand()%800;
 		posY = rand()%600;
-		radio = rand()%80;
+		radio = 40;
 		bolas.append(new Bola(false,posX,posY,velX,velY,radio));
 	}
 	
@@ -59,6 +60,9 @@ void MainWindow::crearQActions(){
 	
 	accionTabla = new QAction("Tabla de información",this);
 	connect(accionTabla, SIGNAL(triggered()),this, SLOT(slotInfoTabla()));
+	
+	accionControlBolas = new QAction("Control bolas",this);
+	connect(accionControlBolas, SIGNAL(triggered()),this, SLOT(slotDControlBolas()));
 }
 
 void MainWindow::crearMenus(){
@@ -68,10 +72,12 @@ void MainWindow::crearMenus(){
         menuArchivo ->addAction(accionDialogo);
         menuDialogos->addAction(accionExamen);
         menuDialogos->addAction(accionTabla);
+        menuDialogos->addAction(accionControlBolas);
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
         this->addAction(accionDialogo);
 	this->addAction(accionExamen);
 	this->addAction(accionTabla);
+	this->addAction(accionControlBolas);
 	
 	
 }
@@ -262,7 +268,13 @@ void MainWindow::slotInfoTabla(void){
 
 }
 
+void MainWindow::slotDControlBolas(void){
 
+	DControlBolas * dialogo = new DControlBolas(&bolas);
+	dialogo->show();	
+
+
+}
 
 
 

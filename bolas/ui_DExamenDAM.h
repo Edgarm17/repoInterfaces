@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DExamenDAM.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,15 +10,12 @@
 #define UI_DEXAMENDAM_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QProgressBar>
@@ -52,15 +49,15 @@ public:
     void setupUi(QDialog *DExamenDAM)
     {
         if (DExamenDAM->objectName().isEmpty())
-            DExamenDAM->setObjectName(QStringLiteral("DExamenDAM"));
+            DExamenDAM->setObjectName(QString::fromUtf8("DExamenDAM"));
         DExamenDAM->resize(584, 424);
         buttonBox = new QDialogButtonBox(DExamenDAM);
-        buttonBox->setObjectName(QStringLiteral("buttonBox"));
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setGeometry(QRect(210, 370, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         lcdBolas = new QLCDNumber(DExamenDAM);
-        lcdBolas->setObjectName(QStringLiteral("lcdBolas"));
+        lcdBolas->setObjectName(QString::fromUtf8("lcdBolas"));
         lcdBolas->setGeometry(QRect(160, 70, 64, 23));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
@@ -126,22 +123,25 @@ public:
         palette.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush);
         lcdBolas->setPalette(palette);
         spinBolas = new QSpinBox(DExamenDAM);
-        spinBolas->setObjectName(QStringLiteral("spinBolas"));
+        spinBolas->setObjectName(QString::fromUtf8("spinBolas"));
         spinBolas->setGeometry(QRect(120, 30, 111, 26));
         label = new QLabel(DExamenDAM);
-        label->setObjectName(QStringLiteral("label"));
+        label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 40, 101, 16));
         comboAccion = new QComboBox(DExamenDAM);
-        comboAccion->setObjectName(QStringLiteral("comboAccion"));
+        comboAccion->addItem(QString());
+        comboAccion->addItem(QString());
+        comboAccion->addItem(QString());
+        comboAccion->setObjectName(QString::fromUtf8("comboAccion"));
         comboAccion->setGeometry(QRect(370, 70, 171, 26));
         label_2 = new QLabel(DExamenDAM);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(260, 80, 57, 16));
         botonRealizar = new QPushButton(DExamenDAM);
-        botonRealizar->setObjectName(QStringLiteral("botonRealizar"));
+        botonRealizar->setObjectName(QString::fromUtf8("botonRealizar"));
         botonRealizar->setGeometry(QRect(410, 110, 87, 27));
         groupBox = new QGroupBox(DExamenDAM);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setGeometry(QRect(280, 160, 211, 113));
         QPalette palette1;
         palette1.setBrush(QPalette::Active, QPalette::WindowText, brush);
@@ -212,11 +212,11 @@ public:
         palette1.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush);
         groupBox->setPalette(palette1);
         horizontalLayout = new QHBoxLayout(groupBox);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         rbYa = new QRadioButton(groupBox);
-        rbYa->setObjectName(QStringLiteral("rbYa"));
+        rbYa->setObjectName(QString::fromUtf8("rbYa"));
         QPalette palette2;
         QBrush brush17(QColor(239, 41, 41, 255));
         brush17.setStyle(Qt::SolidPattern);
@@ -228,7 +228,7 @@ public:
         verticalLayout->addWidget(rbYa);
 
         rbRato = new QRadioButton(groupBox);
-        rbRato->setObjectName(QStringLiteral("rbRato"));
+        rbRato->setObjectName(QString::fromUtf8("rbRato"));
 
         verticalLayout->addWidget(rbRato);
 
@@ -236,17 +236,17 @@ public:
         horizontalLayout->addLayout(verticalLayout);
 
         label_3 = new QLabel(DExamenDAM);
-        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(10, 80, 111, 16));
         progressBar = new QProgressBar(DExamenDAM);
-        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setObjectName(QString::fromUtf8("progressBar"));
         progressBar->setGeometry(QRect(140, 320, 118, 23));
         progressBar->setValue(24);
         label_4 = new QLabel(DExamenDAM);
-        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(20, 320, 121, 16));
         BotonFinalizar = new QPushButton(DExamenDAM);
-        BotonFinalizar->setObjectName(QStringLiteral("BotonFinalizar"));
+        BotonFinalizar->setObjectName(QString::fromUtf8("BotonFinalizar"));
         BotonFinalizar->setGeometry(QRect(20, 370, 311, 27));
 
         retranslateUi(DExamenDAM);
@@ -258,22 +258,20 @@ public:
 
     void retranslateUi(QDialog *DExamenDAM)
     {
-        DExamenDAM->setWindowTitle(QApplication::translate("DExamenDAM", "Dialog", Q_NULLPTR));
-        label->setText(QApplication::translate("DExamenDAM", "Numero de Bola", Q_NULLPTR));
-        comboAccion->clear();
-        comboAccion->insertItems(0, QStringList()
-         << QApplication::translate("DExamenDAM", "Parar", Q_NULLPTR)
-         << QApplication::translate("DExamenDAM", "Inicializar Aleatoriamente", Q_NULLPTR)
-         << QApplication::translate("DExamenDAM", "ASignar color", Q_NULLPTR)
-        );
-        label_2->setText(QApplication::translate("DExamenDAM", "Accion:", Q_NULLPTR));
-        botonRealizar->setText(QApplication::translate("DExamenDAM", "Realizar", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("DExamenDAM", "Hora ejecuci\303\263n acci\303\263n", Q_NULLPTR));
-        rbYa->setText(QApplication::translate("DExamenDAM", "Ya", Q_NULLPTR));
-        rbRato->setText(QApplication::translate("DExamenDAM", "Dentro de un rato", Q_NULLPTR));
-        label_3->setText(QApplication::translate("DExamenDAM", "Elegida Bola", Q_NULLPTR));
-        label_4->setText(QApplication::translate("DExamenDAM", "Tiempo Restante", Q_NULLPTR));
-        BotonFinalizar->setText(QApplication::translate("DExamenDAM", "Finalizar Aplicaci\303\263n", Q_NULLPTR));
+        DExamenDAM->setWindowTitle(QApplication::translate("DExamenDAM", "Dialog", nullptr));
+        label->setText(QApplication::translate("DExamenDAM", "Numero de Bola", nullptr));
+        comboAccion->setItemText(0, QApplication::translate("DExamenDAM", "Parar", nullptr));
+        comboAccion->setItemText(1, QApplication::translate("DExamenDAM", "Inicializar Aleatoriamente", nullptr));
+        comboAccion->setItemText(2, QApplication::translate("DExamenDAM", "ASignar color", nullptr));
+
+        label_2->setText(QApplication::translate("DExamenDAM", "Accion:", nullptr));
+        botonRealizar->setText(QApplication::translate("DExamenDAM", "Realizar", nullptr));
+        groupBox->setTitle(QApplication::translate("DExamenDAM", "Hora ejecuci\303\263n acci\303\263n", nullptr));
+        rbYa->setText(QApplication::translate("DExamenDAM", "Ya", nullptr));
+        rbRato->setText(QApplication::translate("DExamenDAM", "Dentro de un rato", nullptr));
+        label_3->setText(QApplication::translate("DExamenDAM", "Elegida Bola", nullptr));
+        label_4->setText(QApplication::translate("DExamenDAM", "Tiempo Restante", nullptr));
+        BotonFinalizar->setText(QApplication::translate("DExamenDAM", "Finalizar Aplicaci\303\263n", nullptr));
     } // retranslateUi
 
 };

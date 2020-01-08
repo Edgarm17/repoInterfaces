@@ -5,6 +5,7 @@
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad)
 {
 	jugador = esJugador;
+	seleccionada = false;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -19,6 +20,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	 Bola(esJugador,posX,posY,velX,velY,radio)
 {
 	jugador = esJugador;
+	seleccionada = false;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -36,7 +38,13 @@ void Bola::pintarBola(QPainter & pintor){
 		pintor.setPen(Qt::red);
 		pintor.drawEllipse(x,y,radio,radio);
 	}else{
-		pintor.setBrush(color);
+		if(seleccionada){
+			pintor.setBrush(Qt::FDiagPattern);
+			
+		}else{
+			pintor.setBrush(color);
+		}
+		
 		pintor.drawEllipse(x,y,radio,radio);
 	}
 

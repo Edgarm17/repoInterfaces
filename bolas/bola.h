@@ -21,6 +21,7 @@ public:
 	float vY;
 	float radio;
 	bool jugador;
+	bool seleccionada;
 	QColor color;
 private:
 
