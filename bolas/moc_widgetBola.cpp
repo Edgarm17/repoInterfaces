@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'widgetBola.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'widgetBola.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.2. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_WidgetBola_t {
     QByteArrayData data[4];
-    char stringdata0[43];
+    char stringdata0[42];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,17 +34,17 @@ static const qt_meta_stringdata_WidgetBola_t qt_meta_stringdata_WidgetBola = {
 QT_MOC_LITERAL(0, 0, 10), // "WidgetBola"
 QT_MOC_LITERAL(1, 11, 13), // "slotPararBola"
 QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 16) // "slotCambiarColor"
+QT_MOC_LITERAL(3, 26, 15) // "slotElegirColor"
 
     },
-    "WidgetBola\0slotPararBola\0\0slotCambiarColor"
+    "WidgetBola\0slotPararBola\0\0slotElegirColor"
 };
 #undef QT_MOC_LITERAL
 
 static const uint qt_meta_data_WidgetBola[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
@@ -68,25 +68,21 @@ static const uint qt_meta_data_WidgetBola[] = {
 void WidgetBola::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<WidgetBola *>(_o);
+        WidgetBola *_t = static_cast<WidgetBola *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->slotPararBola(); break;
-        case 1: _t->slotCambiarColor(); break;
+        case 1: _t->slotElegirColor(); break;
         default: ;
         }
     }
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject WidgetBola::staticMetaObject = { {
-    &QWidget::staticMetaObject,
-    qt_meta_stringdata_WidgetBola.data,
-    qt_meta_data_WidgetBola,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject WidgetBola::staticMetaObject = {
+    { &QWidget::staticMetaObject, qt_meta_stringdata_WidgetBola.data,
+      qt_meta_data_WidgetBola,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *WidgetBola::metaObject() const

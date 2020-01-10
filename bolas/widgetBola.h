@@ -17,7 +17,7 @@ public:
 public slots:
 
 	void slotPararBola();
-	void slotCambiarColor();        
+	void slotElegirColor();        
 private:
 
 };

@@ -42,6 +42,7 @@ void Bola::pintarBola(QPainter & pintor){
 			pintor.setBrush(Qt::FDiagPattern);
 			
 		}else{
+			
 			pintor.setBrush(color);
 		}
 		

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'DExamenDAM.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'DExamenDAM.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.12.2. It"
+#error "This file was generated using the moc from 5.9.5. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -49,7 +49,7 @@ QT_MOC_LITERAL(6, 69, 12) // "slotRealizar"
 static const uint qt_meta_data_DExamenDAM[] = {
 
  // content:
-       8,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        5,   14, // methods
@@ -79,7 +79,7 @@ static const uint qt_meta_data_DExamenDAM[] = {
 void DExamenDAM::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<DExamenDAM *>(_o);
+        DExamenDAM *_t = static_cast<DExamenDAM *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->slotRadioButtons((*reinterpret_cast< bool(*)>(_a[1]))); break;
@@ -92,14 +92,10 @@ void DExamenDAM::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject DExamenDAM::staticMetaObject = { {
-    &QDialog::staticMetaObject,
-    qt_meta_stringdata_DExamenDAM.data,
-    qt_meta_data_DExamenDAM,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
+const QMetaObject DExamenDAM::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_DExamenDAM.data,
+      qt_meta_data_DExamenDAM,  qt_static_metacall, nullptr, nullptr}
+};
 
 
 const QMetaObject *DExamenDAM::metaObject() const

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>190</width>
+    <width>188</width>
     <height>208</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
     <string>Parar Bola</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btnElegir">
+  <widget class="QPushButton" name="btnColor">
    <property name="geometry">
     <rect>
      <x>50</x>

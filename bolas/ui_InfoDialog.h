@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'InfoDialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.2
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,12 @@
 #define UI_INFODIALOG_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 
 QT_BEGIN_NAMESPACE
@@ -29,24 +32,24 @@ public:
     void setupUi(QDialog *InfoDialog)
     {
         if (InfoDialog->objectName().isEmpty())
-            InfoDialog->setObjectName(QString::fromUtf8("InfoDialog"));
+            InfoDialog->setObjectName(QStringLiteral("InfoDialog"));
         InfoDialog->resize(400, 300);
         buttonBox = new QDialogButtonBox(InfoDialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setObjectName(QStringLiteral("buttonBox"));
         buttonBox->setGeometry(QRect(30, 240, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         label = new QLabel(InfoDialog);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(40, 60, 121, 17));
         label_2 = new QLabel(InfoDialog);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(40, 130, 121, 17));
         lbNum = new QLabel(InfoDialog);
-        lbNum->setObjectName(QString::fromUtf8("lbNum"));
+        lbNum->setObjectName(QStringLiteral("lbNum"));
         lbNum->setGeometry(QRect(200, 60, 67, 17));
         lbSize = new QLabel(InfoDialog);
-        lbSize->setObjectName(QString::fromUtf8("lbSize"));
+        lbSize->setObjectName(QStringLiteral("lbSize"));
         lbSize->setGeometry(QRect(190, 130, 67, 17));
 
         retranslateUi(InfoDialog);
@@ -58,9 +61,9 @@ public:
 
     void retranslateUi(QDialog *InfoDialog)
     {
-        InfoDialog->setWindowTitle(QApplication::translate("InfoDialog", "Dialog", nullptr));
-        label->setText(QApplication::translate("InfoDialog", "N\303\272mero de bolas:", nullptr));
-        label_2->setText(QApplication::translate("InfoDialog", "Tama\303\261o ventana:", nullptr));
+        InfoDialog->setWindowTitle(QApplication::translate("InfoDialog", "Dialog", Q_NULLPTR));
+        label->setText(QApplication::translate("InfoDialog", "N\303\272mero de bolas:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("InfoDialog", "Tama\303\261o ventana:", Q_NULLPTR));
         lbNum->setText(QString());
         lbSize->setText(QString());
     } // retranslateUi
