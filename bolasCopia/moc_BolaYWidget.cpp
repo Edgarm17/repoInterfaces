@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'InfoDialog.h'
+** Meta object code from reading C++ file 'BolaYWidget.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.12.2)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "InfoDialog.h"
+#include "BolaYWidget.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'InfoDialog.h' doesn't include <QObject>."
+#error "The header file 'BolaYWidget.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.12.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -20,25 +20,25 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_InfoDialog_t {
+struct qt_meta_stringdata_BolaYWidget_t {
     QByteArrayData data[1];
-    char stringdata0[11];
+    char stringdata0[12];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_InfoDialog_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_BolaYWidget_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_InfoDialog_t qt_meta_stringdata_InfoDialog = {
+static const qt_meta_stringdata_BolaYWidget_t qt_meta_stringdata_BolaYWidget = {
     {
-QT_MOC_LITERAL(0, 0, 10) // "InfoDialog"
+QT_MOC_LITERAL(0, 0, 11) // "BolaYWidget"
 
     },
-    "InfoDialog"
+    "BolaYWidget"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_InfoDialog[] = {
+static const uint qt_meta_data_BolaYWidget[] = {
 
  // content:
        8,       // revision
@@ -54,7 +54,7 @@ static const uint qt_meta_data_InfoDialog[] = {
        0        // eod
 };
 
-void InfoDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void BolaYWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -62,34 +62,34 @@ void InfoDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject InfoDialog::staticMetaObject = { {
-    &QDialog::staticMetaObject,
-    qt_meta_stringdata_InfoDialog.data,
-    qt_meta_data_InfoDialog,
+QT_INIT_METAOBJECT const QMetaObject BolaYWidget::staticMetaObject = { {
+    &WidgetBola::staticMetaObject,
+    qt_meta_stringdata_BolaYWidget.data,
+    qt_meta_data_BolaYWidget,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *InfoDialog::metaObject() const
+const QMetaObject *BolaYWidget::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *InfoDialog::qt_metacast(const char *_clname)
+void *BolaYWidget::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_InfoDialog.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_BolaYWidget.stringdata0))
         return static_cast<void*>(this);
-    if (!strcmp(_clname, "Ui::InfoDialog"))
-        return static_cast< Ui::InfoDialog*>(this);
-    return QDialog::qt_metacast(_clname);
+    if (!strcmp(_clname, "Bola"))
+        return static_cast< Bola*>(this);
+    return WidgetBola::qt_metacast(_clname);
 }
 
-int InfoDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int BolaYWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QDialog::qt_metacall(_c, _id, _a);
+    _id = WidgetBola::qt_metacall(_c, _id, _a);
     return _id;
 }
 QT_WARNING_POP

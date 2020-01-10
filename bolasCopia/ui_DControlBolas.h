@@ -37,7 +37,7 @@ public:
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setGeometry(QRect(280, 350, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Yes);
         tabBolas = new QTabWidget(DControlBolas);
         tabBolas->setObjectName(QString::fromUtf8("tabBolas"));
         tabBolas->setGeometry(QRect(60, 40, 511, 271));

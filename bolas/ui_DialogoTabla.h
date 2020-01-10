@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DialogoTabla.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.5
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,7 @@
 #define UI_DIALOGOTABLA_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHeaderView>
@@ -31,7 +29,7 @@ public:
     void setupUi(QDialog *DialogoTabla)
     {
         if (DialogoTabla->objectName().isEmpty())
-            DialogoTabla->setObjectName(QStringLiteral("DialogoTabla"));
+            DialogoTabla->setObjectName(QString::fromUtf8("DialogoTabla"));
         DialogoTabla->resize(513, 287);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
@@ -40,9 +38,9 @@ public:
         DialogoTabla->setSizePolicy(sizePolicy);
         DialogoTabla->setBaseSize(QSize(513, 287));
         verticalLayout = new QVBoxLayout(DialogoTabla);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         tableView = new QTableView(DialogoTabla);
-        tableView->setObjectName(QStringLiteral("tableView"));
+        tableView->setObjectName(QString::fromUtf8("tableView"));
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -53,7 +51,7 @@ public:
         verticalLayout->addWidget(tableView);
 
         buttonBox = new QDialogButtonBox(DialogoTabla);
-        buttonBox->setObjectName(QStringLiteral("buttonBox"));
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
@@ -69,7 +67,7 @@ public:
 
     void retranslateUi(QDialog *DialogoTabla)
     {
-        DialogoTabla->setWindowTitle(QApplication::translate("DialogoTabla", "Dialog", Q_NULLPTR));
+        DialogoTabla->setWindowTitle(QApplication::translate("DialogoTabla", "Dialog", nullptr));
     } // retranslateUi
 
 };
