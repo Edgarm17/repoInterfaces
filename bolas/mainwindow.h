@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <QVector>
+#include <QPoint>
 class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
@@ -18,6 +19,8 @@ public:
 	void keyPressEvent(QKeyEvent * e);
 	void mouseDoubleClickEvent(QMouseEvent * e);
 	void mousePressEvent(QMouseEvent *e);
+	void dropEvent(QDropEvent * event);
+	void dragEnterEvent( QDragEnterEvent * event );
 	void mouseReleaseEvent(QMouseEvent *e);
 	void mouseMoveEvent(QMouseEvent *e);
 	void moverJugadorRaton(void);
@@ -32,7 +35,11 @@ private:
 	float posRatonY;
 	void crearQActions();
 	void crearMenus();
+	void performDrag();
 	int vidasJugador;
+	QPoint puntoEntrada;
+	QPoint puntoSoltar;
+	QPoint startPos;
 	
 	QMouseEvent * eventoInicial;
 	QAction * accionDialogo;

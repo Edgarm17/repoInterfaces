@@ -13,6 +13,27 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	radio = rad;
 	vida = vidaInicial;
 	color = QColor(rand()%256,rand()%256,rand()%256);
+	imagen = QImage("./img/batman.png");
+	imagen.scaled(Bola::radio,Bola::radio);
+	mostrarImagen = true;
+	
+}
+
+Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad,
+	QImage img)
+{
+	jugador = esJugador;
+	seleccionada = false;
+	x = posX;
+	y = posY;
+	vX = velX;
+	vY = velY;
+	radio = rad;
+	vida = vidaInicial;
+	color = QColor(rand()%256,rand()%256,rand()%256);
+	imagen = img;
+	imagen.scaled(Bola::radio,Bola::radio);
+	mostrarImagen = true;
 	
 }
 
@@ -28,6 +49,9 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	radio = rad;
 	vida = vidaInicial;
 	color = col;
+	imagen = QImage("./img/batman.png");
+	imagen.scaled(Bola::radio,Bola::radio);
+	mostrarImagen = true;
 	
 }
 
@@ -40,13 +64,19 @@ void Bola::pintarBola(QPainter & pintor){
 	}else{
 		if(seleccionada){
 			pintor.setBrush(Qt::FDiagPattern);
+			pintor.drawEllipse(x,y,radio,radio);
 			
 		}else{
+			if(mostrarImagen){
+				pintor.drawImage(x,y,imagen);
+			}else{
+				pintor.setBrush(color);
+				pintor.drawEllipse(x,y,radio,radio);
+			}
 			
-			pintor.setBrush(color);
 		}
 		
-		pintor.drawEllipse(x,y,radio,radio);
+		
 	}
 
 	

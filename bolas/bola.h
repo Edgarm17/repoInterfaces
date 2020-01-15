@@ -7,6 +7,7 @@ class Bola{
 
 public:
         Bola(bool, float , float , float , float, float );
+        Bola(bool, float , float , float , float, float, QImage );
         Bola(bool, float , float , float , float, float, QColor );
 	void pintarBola(QPainter &);
 	void mover(float, float);
@@ -22,7 +23,10 @@ public:
 	float radio;
 	bool jugador;
 	bool seleccionada;
+	bool mostrarImagen;
 	QColor color;
+	QImage imagen;
+	
 private:
 
 };

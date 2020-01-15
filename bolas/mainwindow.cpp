@@ -13,7 +13,12 @@
 #include <QDebug>
 #include <QAction>
 #include <QMenuBar>
+#include <QMessageBox>
+#include <QMimeData>
+#include <QDrag>
 MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
+
+	setAcceptDrops(true);
 
 	QTimer * temporizador = new QTimer();
 	/*programar el temporizador*/
@@ -157,9 +162,14 @@ void MainWindow::keyPressEvent(QKeyEvent * e){
 	
 }
 
-void MainWindow::mousePressEvent(QMouseEvent * e){
+void MainWindow::mousePressEvent(QMouseEvent * event){
 
-	eventoInicial = new QMouseEvent(*e);	
+	eventoInicial = new QMouseEvent(*event);
+	
+	if (event->button() == Qt::LeftButton)
+        	startPos = event->pos();
+    	//QMainWindow::mousePressEvent(event);
+	
 
 }
 
@@ -198,8 +208,14 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent * e){
 	bolas.append(newBola);
 }
 
-void MainWindow::mouseMoveEvent(QMouseEvent * e){
+void MainWindow::mouseMoveEvent(QMouseEvent * event){
 
+	if (event->buttons() & Qt::LeftButton) {
+        int distance = (event->pos() - startPos).manhattanLength();
+        if (distance >= QApplication::startDragDistance())
+            performDrag();
+    }
+    //QMainWindow::mouseMoveEvent(event);
 	
 
 }
@@ -214,11 +230,11 @@ void MainWindow::moverJugadorRaton(void){
 	float incVely = (posRatonY - jugador->y);
 	incVely = pow((incVely * 0.0012),3);
 	
-	jugador->vX += incVelx;
-	jugador->vY += incVely;
+	//jugador->vX += incVelx;
+	//jugador->vY += incVely;
 	
-	jugador->vX = jugador->vX * 0.99;
-	jugador->vY = jugador->vY * 0.99;
+	//jugador->vX = jugador->vX * 0.99;
+	//jugador->vY = jugador->vY * 0.99;
 	
 	
 }
@@ -276,10 +292,57 @@ void MainWindow::slotDControlBolas(void){
 
 }
 
+void MainWindow::dropEvent(QDropEvent * event){
 
+	if(!event->mimeData()->hasUrls()) return;
+	
+	QString text = (event->mimeData()->urls()).first().path();
+	puntoSoltar = event->pos();
+	qDebug()<<"Punto soltar: " << puntoSoltar.x() << endl;
+	QMessageBox::warning(this, tr("Archivo arrastrado"),
+                                tr("Has arrastrado el archivo:\n")+text,
+                                QMessageBox::Save | QMessageBox::Discard
+                                | QMessageBox::Cancel,
+                                QMessageBox::Save);
+                                
+      //	QImage * newImagen = new QImage(text);
+      	//for(int i = 0; i < bolas.size() ; i++){
+      	//	bolas.at(i)->imagen = QImage(text);//*newImagen;
+      	//}
+      	
+      	
+	
+	float vX = (puntoSoltar.x() - puntoEntrada.x()) / 50.2;
+	float vY = (puntoSoltar.y() - puntoEntrada.y()) / 50.3;
+      	
+      	Bola * nuevaBola = new Bola(false,puntoSoltar.x(),puntoSoltar.y(),vX,vY,
+      	radio,QImage(text));
+      	bolas.append(nuevaBola);
+}
 
+void MainWindow::dragEnterEvent ( QDragEnterEvent * event ) {
+    event->acceptProposedAction();
+    puntoEntrada = event->pos();
+    qDebug()<<"Punto entrada: " << puntoEntrada.x() << endl;
+    
+}
 
+void MainWindow::performDrag(){
+	QMimeData *mime = new QMimeData;
+        //mime->setText(QString("Hola pepe"));
 
+	QPixmap pixmap(size());
+	this->render(&pixmap);
+	mime->setImageData(pixmap);
+	
+        QDrag *drag = new QDrag(this);
+        drag->setMimeData(mime);
+        drag->setPixmap(QPixmap("./img/drag.png"));
+        drag->setDragCursor(QPixmap("./img/arrastrarMano.png"),
+        	Qt::MoveAction);
+        drag->exec(Qt::MoveAction);
+
+}
 
 
 
