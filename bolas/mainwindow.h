@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <QVector>
 #include <QPoint>
+#include "PowerUp.h"
 class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
@@ -36,10 +37,14 @@ private:
 	void crearQActions();
 	void crearMenus();
 	void performDrag();
+	void crearPowerUps();
 	int vidasJugador;
+	int cont;
 	QPoint puntoEntrada;
 	QPoint puntoSoltar;
 	QPoint startPos;
+	QImage imagenCorazon;
+	QTimer * timerPU;
 	
 	QMouseEvent * eventoInicial;
 	QAction * accionDialogo;
@@ -50,6 +55,7 @@ private:
 	QMenu * menuDialogos;
 	Bola * jugador;
 	QVector<Bola*> bolas;
+	QVector<PowerUp*> powerUps;
 	
         
 public slots:
@@ -59,6 +65,7 @@ public slots:
 	void slotExamen();
 	void slotInfoTabla();
 	void slotDControlBolas();
+
 };
 
 #endif 

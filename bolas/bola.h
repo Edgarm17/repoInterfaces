@@ -2,6 +2,7 @@
 #define BOLA_H
 
 #include <QPainter>
+#include "PowerUp.h"
 
 class Bola{
 
@@ -10,8 +11,10 @@ public:
         Bola(bool, float , float , float , float, float, QImage );
         Bola(bool, float , float , float , float, float, QColor );
 	void pintarBola(QPainter &);
+	void pintarVida(QPainter &);
 	void mover(float, float);
 	bool chocar(Bola &);
+	float distanciaPU(float,float);
 	float calcDistancia(Bola );
 	static const int vidaInicial = 1000;
 

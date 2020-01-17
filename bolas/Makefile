@@ -59,6 +59,7 @@ SOURCES       = bola.cpp \
 		InfoDialog.cpp \
 		main.cpp \
 		mainwindow.cpp \
+		PowerUp.cpp \
 		widgetBola.cpp moc_DControlBolas.cpp \
 		moc_DExamenDAM.cpp \
 		moc_DialogoTabla.cpp \
@@ -72,6 +73,7 @@ OBJECTS       = bola.o \
 		InfoDialog.o \
 		main.o \
 		mainwindow.o \
+		PowerUp.o \
 		widgetBola.o \
 		moc_DControlBolas.o \
 		moc_DExamenDAM.o \
@@ -164,6 +166,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		DialogoTabla.h \
 		InfoDialog.h \
 		mainwindow.h \
+		PowerUp.h \
 		widgetBola.h bola.cpp \
 		DControlBolas.cpp \
 		DExamenDAM.cpp \
@@ -171,6 +174,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		InfoDialog.cpp \
 		main.cpp \
 		mainwindow.cpp \
+		PowerUp.cpp \
 		widgetBola.cpp
 QMAKE_TARGET  = bolas
 DESTDIR       = 
@@ -365,8 +369,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents bola.h DControlBolas.h DExamenDAM.h DialogoTabla.h InfoDialog.h mainwindow.h widgetBola.h $(DISTDIR)/
-	$(COPY_FILE) --parents bola.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp InfoDialog.cpp main.cpp mainwindow.cpp widgetBola.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents bola.h DControlBolas.h DExamenDAM.h DialogoTabla.h InfoDialog.h mainwindow.h PowerUp.h widgetBola.h $(DISTDIR)/
+	$(COPY_FILE) --parents bola.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp InfoDialog.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents DControlBolas.ui DExamenDAM.ui DialogoTabla.ui InfoDialog.ui widgetBola.ui $(DISTDIR)/
 
 
@@ -518,6 +522,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		DControlBolas.h \
 		ui_DControlBolas.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+
+PowerUp.o: PowerUp.cpp PowerUp.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PowerUp.o PowerUp.cpp
 
 widgetBola.o: widgetBola.cpp widgetBola.h \
 		ui_widgetBola.h \

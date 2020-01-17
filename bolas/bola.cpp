@@ -85,6 +85,19 @@ void Bola::pintarBola(QPainter & pintor){
     	
 }
 
+void Bola::pintarVida(QPainter & pintor){
+
+	
+	float anchoVerde = (((float)vida) / vidaInicial)*(float)radio;
+		
+	float anchoRojo = (radio - (float)anchoVerde);
+	pintor.setBrush(Qt::green);
+	pintor.drawRect(x,y,anchoVerde,3);
+	pintor.setBrush(Qt::red);
+	pintor.drawRect(x + anchoVerde,y,anchoRojo,3);
+
+}
+
 void Bola::mover(float altura, float anchura){
 	/*Rebotes izquierda y derecha*/
     	
@@ -170,6 +183,16 @@ bool Bola::chocar(Bola & otra){
 	}	
 
 	return choque;
+}
+
+float Bola::distanciaPU(float posX, float posY){
+
+	float distancia;
+	
+	distancia = sqrtf((powf(posX - x,2))+(powf(posY - y,2)));
+	
+	return distancia;
+	
 }
 
 float Bola::calcDistancia(Bola otra){

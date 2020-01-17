@@ -16,9 +16,17 @@
 #include <QMessageBox>
 #include <QMimeData>
 #include <QDrag>
-MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
 
-	setAcceptDrops(true);
+MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
+	
+	imagenCorazon = QImage("./img/heartPU.png");
+	vidasJugador = 5;
+	cont = 0;
+	crearQActions();
+	crearMenus();
+	resize(800,600);
+	
+	
 
 	QTimer * temporizador = new QTimer();
 	/*programar el temporizador*/
@@ -26,33 +34,26 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	temporizador->setSingleShot(false);
 	temporizador->start();
 	/*arrancar el temporizador*/
-	
-	
-	crearQActions();
-	crearMenus();
-	
 	connect(temporizador,SIGNAL(timeout()),this, SLOT(slotRepintar()));
 	
-	resize(800,600);
-	vidasJugador = 5;
 	
-	
-	
-	for(int i = 0; i<5; i++){
-		velX = 3;
-		velY = 3;
-		posX = rand()%800;
-		posY = rand()%600;
-		radio = 40;
-		bolas.append(new Bola(false,posX,posY,velX,velY,radio));
-	}
+	/*CREAR BOLAS*/
+	//for(int i = 0; i<5; i++){
+	//	velX = 3;
+	//	velY = 3;
+	//	posX = rand()%800;
+	//	posY = rand()%600;
+	//	radio = 40;
+	//	bolas.append(new Bola(false,posX,posY,velX,velY,radio));
+	//}
 	
 	posX = posY = 20;
 	
-    	jugador = new Bola(true,posX,posY,0.0,0.0,80);
+    	jugador = new Bola(true,posX,posY,0.0,0.0,50);
     	
     	
     	setMouseTracking(true);
+    	setAcceptDrops(true);
     	
 }
 
@@ -92,53 +93,33 @@ void MainWindow::paintEvent(QPaintEvent *e){
 	
 	QPainter pintor(this);
 	
+	/*PINTAR JUGADOR*/
 	jugador->pintarBola(pintor);
-	jugador->mover(height(),width());
 	
+	/*PINTAR BOLAS*/
 	for(int i = 0; i<bolas.size(); i++){
 		bolas[i]->pintarBola(pintor);
-		bolas[i]->mover(height(),width());
-		
-		for(int j = 0; j<bolas.size(); j++){
-			if(bolas[i]->chocar(*bolas[j])){
-				bolas[j]->vida-=10;
-				bolas[i]->vida-=10;
-			}
-		}
-		if(jugador->chocar(*bolas[i])){
-			jugador->vida-=10;
-			bolas[i]->vida-=10;
-		}
 	}
 	
-	
-	
+	/*PINTAR VIDA BOLAS Y JUGADOR*/
 	for(int i = 0; i<bolas.size(); i++){
-		int ancho = bolas[i]->radio;
-		float anchoVerde = (((float)bolas[i]->vida) / 
-		bolas[i]->vidaInicial)*(float)ancho;
-		
-		float anchoRojo = (ancho - (float)anchoVerde);
-		pintor.setBrush(Qt::green);
-		pintor.drawRect(bolas[i]->x,bolas[i]->y,anchoVerde,3);
-		pintor.setBrush(Qt::red);
-		pintor.drawRect(bolas[i]->x + anchoVerde,bolas[i]->y,anchoRojo,3);
+		bolas[i]->pintarVida(pintor);
 	}
 	
-		int ancho = jugador->radio;
-		float anchoVerde = (((float)jugador->vida) / jugador->vidaInicial)*(float)ancho;
-		float anchoRojo = (ancho - (float)anchoVerde);
-		pintor.setBrush(Qt::green);
-		pintor.drawRect(jugador->x,jugador->y,anchoVerde,3);
-		pintor.setBrush(Qt::red);
-		pintor.drawRect(jugador->x + anchoVerde,jugador->y,anchoRojo,3);
-		
+	jugador->pintarVida(pintor);
+	
+	/*PINTAR POWERUPS*/
+	for(int i = 0; i<powerUps.size(); i++){
+		powerUps[i]->pintarPU(pintor);
+	}
 	
 	
 	
-    		
+	
+
 
 }
+
 
 void MainWindow::keyPressEvent(QKeyEvent * e){
 	
@@ -230,11 +211,11 @@ void MainWindow::moverJugadorRaton(void){
 	float incVely = (posRatonY - jugador->y);
 	incVely = pow((incVely * 0.0012),3);
 	
-	//jugador->vX += incVelx;
-	//jugador->vY += incVely;
+	jugador->vX += incVelx;
+	jugador->vY += incVely;
 	
-	//jugador->vX = jugador->vX * 0.99;
-	//jugador->vY = jugador->vY * 0.99;
+	jugador->vX = jugador->vX * 0.99;
+	jugador->vY = jugador->vY * 0.99;
 	
 	
 }
@@ -255,6 +236,8 @@ void MainWindow::slotRepintar(void){
 	
 	update();
 	
+	/*ELIMINAR BOLAS MUERTAS*/
+	
 	for(int i = 0; i<bolas.size(); i++){
 		if(bolas[i]->vida < 0){
 			bolas.erase(bolas.begin()+i);
@@ -266,8 +249,72 @@ void MainWindow::slotRepintar(void){
 		
 	}
 	
+	/*MOVER AL JUGADOR CON EL RATON*/
+	
 	moverJugadorRaton();
+	
+	/*MOVER BOLAS Y CONTROLAR CHOQUE*/
+	
+	jugador->mover(height(),width());
+	
+	for(int i=0; i<bolas.size(); i++){
+		bolas[i]->mover(height(),width());
 		
+		for(int j = 0; j<bolas.size(); j++){
+			if(bolas[i]->chocar(*bolas[j])){
+				bolas[j]->vida-=10;
+				bolas[i]->vida-=10;
+			}
+		}
+		if(jugador->chocar(*bolas[i])){
+			jugador->vida-=10;
+			bolas[i]->vida-=10;
+		}
+	}
+	
+	/*CONTROLAR CHOQUE CON POWERUPS*/
+	
+	for(int i=0; i<bolas.size(); i++){
+		
+		for(int j = 0; j<powerUps.size(); j++){
+			if(bolas[i]->distanciaPU(powerUps[j]->posX,powerUps[j]->posY) < 40){
+				powerUps.erase(powerUps.begin()+j);
+				if(bolas[i]->vida <= 800){
+				
+					bolas[i]->vida += 200;
+				}
+			}
+			
+		}
+		
+	}
+	
+	for(int j = 0; j<powerUps.size(); j++){
+	
+		if(jugador->distanciaPU(powerUps[j]->posX,powerUps[j]->posY) < 40){
+			powerUps.erase(powerUps.begin()+j);
+			if(jugador->vida <= 800){
+				
+					jugador->vida += 200;
+			}
+		}
+		
+		//powerUps[j]->resizePU();	
+	}
+	
+	
+	
+	int aleatorio = rand()%1000;
+	
+	int cont = 0;
+	
+	
+	if(aleatorio < 2){
+
+		powerUps.append(new PowerUp(rand()%750,rand()%550,imagenCorazon));
+	}
+	
+	
 	
 }
 
@@ -341,6 +388,10 @@ void MainWindow::performDrag(){
         drag->setDragCursor(QPixmap("./img/arrastrarMano.png"),
         	Qt::MoveAction);
         drag->exec(Qt::MoveAction);
+
+}
+
+void MainWindow::crearPowerUps(){
 
 }
 
