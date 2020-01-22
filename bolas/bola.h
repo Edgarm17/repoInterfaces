@@ -19,6 +19,7 @@ public:
 	static const int vidaInicial = 1000;
 
 	int vida;
+	int colisiones;
         float x;
 	float y;
 	float vX;

@@ -38,14 +38,14 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	
 	
 	/*CREAR BOLAS*/
-	//for(int i = 0; i<5; i++){
-	//	velX = 3;
-	//	velY = 3;
-	//	posX = rand()%800;
-	//	posY = rand()%600;
-	//	radio = 40;
-	//	bolas.append(new Bola(false,posX,posY,velX,velY,radio));
-	//}
+	for(int i = 0; i<5; i++){
+		velX = 3;
+		velY = 3;
+		posX = rand()%800;
+		posY = rand()%600;
+		radio = 40;
+		bolas.append(new 	Bola(false,posX,posY,velX,velY,radio));
+	}
 	
 	posX = posY = 20;
 	
@@ -69,6 +69,9 @@ void MainWindow::crearQActions(){
 	
 	accionControlBolas = new QAction("Control bolas",this);
 	connect(accionControlBolas, SIGNAL(triggered()),this, SLOT(slotDControlBolas()));
+	
+	accionDChart = new QAction("Gráfico bolas",this);
+	connect(accionDChart, SIGNAL(triggered()),this, SLOT(slotDChartColisiones()));
 }
 
 void MainWindow::crearMenus(){
@@ -79,12 +82,13 @@ void MainWindow::crearMenus(){
         menuDialogos->addAction(accionExamen);
         menuDialogos->addAction(accionTabla);
         menuDialogos->addAction(accionControlBolas);
+        menuDialogos->addAction(accionDChart);
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
         this->addAction(accionDialogo);
 	this->addAction(accionExamen);
 	this->addAction(accionTabla);
 	this->addAction(accionControlBolas);
-	
+	this->addAction(accionDChart);
 	
 }
 
@@ -352,7 +356,7 @@ void MainWindow::dropEvent(QDropEvent * event){
                                 | QMessageBox::Cancel,
                                 QMessageBox::Save);
                                 
-      //	QImage * newImagen = new QImage(text);
+      	//QImage * newImagen = new QImage(text);
       	//for(int i = 0; i < bolas.size() ; i++){
       	//	bolas.at(i)->imagen = QImage(text);//*newImagen;
       	//}
@@ -396,7 +400,10 @@ void MainWindow::crearPowerUps(){
 }
 
 
-
+void MainWindow::slotDChartColisiones(){
+	DChartColisiones * dialogo = new DChartColisiones();
+	dialogo->show();
+}
 
 
 

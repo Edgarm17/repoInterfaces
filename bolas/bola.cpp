@@ -6,6 +6,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 {
 	jugador = esJugador;
 	seleccionada = false;
+	colisiones = 0;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -24,6 +25,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 {
 	jugador = esJugador;
 	seleccionada = false;
+	colisiones = 0;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -42,6 +44,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 {
 	jugador = esJugador;
 	seleccionada = false;
+	colisiones = 0;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -180,7 +183,9 @@ bool Bola::chocar(Bola & otra){
 		abajo->vY = arriba -> vY;
 		arriba->vY = aux;
 		choque = true;
-	}	
+	}
+	
+	if(choque) colisiones++;	
 
 	return choque;
 }
