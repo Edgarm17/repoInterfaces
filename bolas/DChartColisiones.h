@@ -2,7 +2,16 @@
 #define DCHARTCOLISIONES_H
 #include "ui_DChartColisiones.h"
 #include <QDialog>
+#include <QTimer>
+#include <QChartView>
+#include <QBarSeries>
+#include <QChart>
+#include <QVector>
+#include <QValueAxis>
+#include <QBarCategoryAxis>
+#include "bola.h"
 
+QT_CHARTS_USE_NAMESPACE
 
 class DChartColisiones : public QDialog, public Ui::DChartColisiones {
 
@@ -11,9 +20,19 @@ class DChartColisiones : public QDialog, public Ui::DChartColisiones {
 public:
 
 	
-	DChartColisiones(QWidget * parent = 0);
+	DChartColisiones(QVector<Bola*> ,QWidget * parent = 0);
 	
-
+	QVector<Bola*> bolas;
+	QBarSeries * series;
+        QChart * chart;
+        QBarSet * set;
+        QStringList bolasX;
+        QBarCategoryAxis * axisX;
+                
+public slots:
+	
+	
+	void slotTemporizador();
 	
 };
 #endif

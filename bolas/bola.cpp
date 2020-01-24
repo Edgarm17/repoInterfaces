@@ -185,7 +185,7 @@ bool Bola::chocar(Bola & otra){
 		choque = true;
 	}
 	
-	if(choque) colisiones++;	
+		
 
 	return choque;
 }

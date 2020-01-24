@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_CHARTS_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCharts -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = bolas1.0.0
 DISTDIR = /home/vesprada/repoInterfaces/bolas/.tmp/bolas1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
+LIBS          = $(SUBLIBS) -lQt5Charts -lQt5Widgets -lQt5Gui -lQt5Core /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,6 +53,7 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = bola.cpp \
+		DChartColisiones.cpp \
 		DControlBolas.cpp \
 		DExamenDAM.cpp \
 		DialogoTabla.cpp \
@@ -60,13 +61,15 @@ SOURCES       = bola.cpp \
 		main.cpp \
 		mainwindow.cpp \
 		PowerUp.cpp \
-		widgetBola.cpp moc_DControlBolas.cpp \
+		widgetBola.cpp moc_DChartColisiones.cpp \
+		moc_DControlBolas.cpp \
 		moc_DExamenDAM.cpp \
 		moc_DialogoTabla.cpp \
 		moc_InfoDialog.cpp \
 		moc_mainwindow.cpp \
 		moc_widgetBola.cpp
 OBJECTS       = bola.o \
+		DChartColisiones.o \
 		DControlBolas.o \
 		DExamenDAM.o \
 		DialogoTabla.o \
@@ -75,6 +78,7 @@ OBJECTS       = bola.o \
 		mainwindow.o \
 		PowerUp.o \
 		widgetBola.o \
+		moc_DChartColisiones.o \
 		moc_DControlBolas.o \
 		moc_DExamenDAM.o \
 		moc_DialogoTabla.o \
@@ -162,6 +166,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		bolas.pro bola.h \
+		DChartColisiones.h \
 		DControlBolas.h \
 		DExamenDAM.h \
 		DialogoTabla.h \
@@ -169,6 +174,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		mainwindow.h \
 		PowerUp.h \
 		widgetBola.h bola.cpp \
+		DChartColisiones.cpp \
 		DControlBolas.cpp \
 		DExamenDAM.cpp \
 		DialogoTabla.cpp \
@@ -269,6 +275,7 @@ Makefile: bolas.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		bolas.pro \
+		/usr/lib/x86_64-linux-gnu/libQt5Charts.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Widgets.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Gui.prl \
 		/usr/lib/x86_64-linux-gnu/libQt5Core.prl
@@ -354,6 +361,7 @@ Makefile: bolas.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf:
 bolas.pro:
+/usr/lib/x86_64-linux-gnu/libQt5Charts.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Widgets.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Gui.prl:
 /usr/lib/x86_64-linux-gnu/libQt5Core.prl:
@@ -372,8 +380,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents bola.h DControlBolas.h DExamenDAM.h DialogoTabla.h InfoDialog.h mainwindow.h PowerUp.h widgetBola.h $(DISTDIR)/
-	$(COPY_FILE) --parents bola.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp InfoDialog.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents bola.h DChartColisiones.h DControlBolas.h DExamenDAM.h DialogoTabla.h InfoDialog.h mainwindow.h PowerUp.h widgetBola.h $(DISTDIR)/
+	$(COPY_FILE) --parents bola.cpp DChartColisiones.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp InfoDialog.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents DChartColisiones.ui DControlBolas.ui DExamenDAM.ui DialogoTabla.ui InfoDialog.ui widgetBola.ui $(DISTDIR)/
 
 
@@ -406,16 +414,22 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
+compiler_moc_header_make_all: moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
+	-$(DEL_FILE) moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
+moc_DChartColisiones.cpp: DChartColisiones.h \
+		ui_DChartColisiones.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DChartColisiones.h -o moc_DChartColisiones.cpp
+
 moc_DControlBolas.cpp: DControlBolas.h \
 		ui_DControlBolas.h \
 		bola.h \
 		PowerUp.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DControlBolas.h -o moc_DControlBolas.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DControlBolas.h -o moc_DControlBolas.cpp
 
 moc_DExamenDAM.cpp: DExamenDAM.h \
 		ui_DExamenDAM.h \
@@ -423,7 +437,7 @@ moc_DExamenDAM.cpp: DExamenDAM.h \
 		PowerUp.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DExamenDAM.h -o moc_DExamenDAM.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DExamenDAM.h -o moc_DExamenDAM.cpp
 
 moc_DialogoTabla.cpp: DialogoTabla.h \
 		ui_DialogoTabla.h \
@@ -431,20 +445,20 @@ moc_DialogoTabla.cpp: DialogoTabla.h \
 		PowerUp.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DialogoTabla.h -o moc_DialogoTabla.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DialogoTabla.h -o moc_DialogoTabla.cpp
 
 moc_InfoDialog.cpp: InfoDialog.h \
 		ui_InfoDialog.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include InfoDialog.h -o moc_InfoDialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include InfoDialog.h -o moc_InfoDialog.cpp
 
 moc_mainwindow.cpp: mainwindow.h \
 		bola.h \
 		PowerUp.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
 
 moc_widgetBola.cpp: widgetBola.h \
 		ui_widgetBola.h \
@@ -452,7 +466,7 @@ moc_widgetBola.cpp: widgetBola.h \
 		PowerUp.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include widgetBola.h -o moc_widgetBola.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/vesprada/repoInterfaces/bolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/vesprada/repoInterfaces/bolas -I/home/vesprada/repoInterfaces/bolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include widgetBola.h -o moc_widgetBola.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -499,6 +513,12 @@ bola.o: bola.cpp bola.h \
 		PowerUp.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bola.o bola.cpp
 
+DChartColisiones.o: DChartColisiones.cpp DChartColisiones.h \
+		ui_DChartColisiones.h \
+		bola.h \
+		PowerUp.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DChartColisiones.o DChartColisiones.cpp
+
 DControlBolas.o: DControlBolas.cpp DControlBolas.h \
 		ui_DControlBolas.h \
 		bola.h \
@@ -538,7 +558,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		DialogoTabla.h \
 		ui_DialogoTabla.h \
 		DControlBolas.h \
-		ui_DControlBolas.h
+		ui_DControlBolas.h \
+		DChartColisiones.h \
+		ui_DChartColisiones.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 PowerUp.o: PowerUp.cpp PowerUp.h
@@ -549,6 +571,9 @@ widgetBola.o: widgetBola.cpp widgetBola.h \
 		bola.h \
 		PowerUp.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widgetBola.o widgetBola.cpp
+
+moc_DChartColisiones.o: moc_DChartColisiones.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DChartColisiones.o moc_DChartColisiones.cpp
 
 moc_DControlBolas.o: moc_DControlBolas.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DControlBolas.o moc_DControlBolas.cpp

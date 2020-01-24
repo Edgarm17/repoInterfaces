@@ -10,6 +10,7 @@
 #include "DExamenDAM.h"
 #include "DialogoTabla.h"
 #include "DControlBolas.h"
+#include "DChartColisiones.h"
 #include <QDebug>
 #include <QAction>
 #include <QMenuBar>
@@ -215,11 +216,11 @@ void MainWindow::moverJugadorRaton(void){
 	float incVely = (posRatonY - jugador->y);
 	incVely = pow((incVely * 0.0012),3);
 	
-	jugador->vX += incVelx;
-	jugador->vY += incVely;
+	//jugador->vX += incVelx;
+	//jugador->vY += incVely;
 	
-	jugador->vX = jugador->vX * 0.99;
-	jugador->vY = jugador->vY * 0.99;
+	//jugador->vX = jugador->vX * 0.99;
+	//jugador->vY = jugador->vY * 0.99;
 	
 	
 }
@@ -267,7 +268,9 @@ void MainWindow::slotRepintar(void){
 		for(int j = 0; j<bolas.size(); j++){
 			if(bolas[i]->chocar(*bolas[j])){
 				bolas[j]->vida-=10;
+				bolas[j]->colisiones++;
 				bolas[i]->vida-=10;
+				bolas[i]->colisiones++;
 			}
 		}
 		if(jugador->chocar(*bolas[i])){
@@ -401,7 +404,7 @@ void MainWindow::crearPowerUps(){
 
 
 void MainWindow::slotDChartColisiones(){
-	DChartColisiones * dialogo = new DChartColisiones();
+	DChartColisiones * dialogo = new DChartColisiones(bolas);
 	dialogo->show();
 }
 
