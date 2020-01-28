@@ -61,7 +61,23 @@ Hostilidad: Hay una competencia bastante alta, ya que muchos productos tratan el
 
 
 
-3.3 COMPETENCIA DIRECTA
+3.3 FUERZAS COMPETITIVAS DE PORTER
+
+	-Grado de competencia: 
+		- Existen muchas empresas que se dedican a realizar aplicaciones, pero no muchas que se dediquen específicamente a este tipo de apps.
+		- El sector está en auge, ya que la salud y el bienestar se esta tomando cada vez mas enserio.
+		- Las apps son muy parecidas porque ofrecen la misma informacion, lo que las diferencia es la facilitación de esta información al cliente.
+		- Las empresas pueden ofrecer los productos que quieran, sin límite pero esto no suele pasar debido a que sacan un producto y su unico propósito
+		  es actualizarlo para su correcto funcionamiento y aplicar mejoras.
+		- A la hora de abandonar el negocio, la dificultad de la salida dependerá de la inversión que se haya realizado en buscar personal que trabaje en
+		  la obtención del producto y en los pagos a la publicidad.
+		  
+	-Posibilidad nuevos competidores:
+		
+		-Si la empresa tiene muy buen personal que tenga mucha experiencia no haría falta mucha inversión, ya que el gran coste de inversión es pagar a
+		los programadores. 
+		-Si ya existe alguna app que funcione correctamente y con la que los clientes estan muy satisfechos, aparte de tener que ofrecer lo mismo y mejor,
+		habría que invertir bastante en publicidad para llegar a los clientes.  
 
 
 
