@@ -30,6 +30,8 @@ public:
 	bool mostrarImagen;
 	QColor color;
 	QImage imagen;
+	Bola * pare;
+	QVector<Bola*> hijas;
 	
 	
 private:

@@ -11,6 +11,7 @@
 #include "DialogoTabla.h"
 #include "DControlBolas.h"
 #include "DChartColisiones.h"
+#include "DTreeView.h"
 #include <QDebug>
 #include <QAction>
 #include <QMenuBar>
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	crearMenus();
 	resize(800,600);
 	
+	bolasTotales = 0;
 	
 
 	QTimer * temporizador = new QTimer();
@@ -45,12 +47,14 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 		posX = rand()%800;
 		posY = rand()%600;
 		radio = 40;
+		bolasTotales++;
 		bolas.append(new 	Bola(false,posX,posY,velX,velY,radio));
 	}
 	
 	posX = posY = 20;
 	
     	jugador = new Bola(true,posX,posY,0.0,0.0,50);
+    	bolasTotales++;
     	
     	
     	setMouseTracking(true);
@@ -73,6 +77,9 @@ void MainWindow::crearQActions(){
 	
 	accionDChart = new QAction("Gráfico bolas",this);
 	connect(accionDChart, SIGNAL(triggered()),this, SLOT(slotDChartColisiones()));
+	
+	accionDTree = new QAction("Vista arbol",this);
+	connect(accionDTree, SIGNAL(triggered()),this, SLOT(slotDTreeView()));
 }
 
 void MainWindow::crearMenus(){
@@ -84,6 +91,7 @@ void MainWindow::crearMenus(){
         menuDialogos->addAction(accionTabla);
         menuDialogos->addAction(accionControlBolas);
         menuDialogos->addAction(accionDChart);
+        menuDialogos->addAction(accionDTree);
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
         this->addAction(accionDialogo);
 	this->addAction(accionExamen);
@@ -104,6 +112,7 @@ void MainWindow::paintEvent(QPaintEvent *e){
 	/*PINTAR BOLAS*/
 	for(int i = 0; i<bolas.size(); i++){
 		bolas[i]->pintarBola(pintor);
+	
 	}
 	
 	/*PINTAR VIDA BOLAS Y JUGADOR*/
@@ -236,6 +245,49 @@ void MainWindow::slotDialogo(void){
 	dialogo->show();
 }
 
+void MainWindow::movimientoChoqueBolas( QVector<Bola*> & vector){
+	for(int i=0; i<vector.size(); i++){
+		vector[i]->mover(height(),width());
+		
+		
+		
+		//pintor.drawText(posX+15,posY+15, QString::number(numBola);
+		
+		
+		for(int j = 0; j<vector.size(); j++){
+			if(vector[i]->chocar(*vector[j])){
+				vector[j]->vida-=10;
+				vector[j]->colisiones++;
+				vector[i]->vida-=10;
+				vector[i]->colisiones++;
+				
+				if(rand()%100 < 20 && bolasTotales < 15){
+					float posX = rand()%800;
+					float posY = rand()%600;
+					float radio = 0;
+					
+					if(vector[i]->radio - 10 > 10){
+						radio = vector[i]->radio - 10;
+					}else{
+						radio = vector[i]->radio;
+					}
+					//qDebug()<< "Bola creada" << endl;
+					Bola * nuevaBola = new Bola(false,posX,posY,3,3,radio);
+					nuevaBola->mostrarImagen = false;
+					nuevaBola->pare = vector[i];
+					vector[i]->hijas.append(nuevaBola);
+					bolas.append(nuevaBola);
+					bolasTotales++;
+				}
+			}
+		}
+		if(jugador->chocar(*bolas[i])){
+			jugador->vida-=10;
+			bolas[i]->vida-=10;
+		}
+	}
+}
+
 
 void MainWindow::slotRepintar(void){
 	
@@ -264,22 +316,9 @@ void MainWindow::slotRepintar(void){
 	
 	jugador->mover(height(),width());
 	
-	for(int i=0; i<bolas.size(); i++){
-		bolas[i]->mover(height(),width());
-		
-		for(int j = 0; j<bolas.size(); j++){
-			if(bolas[i]->chocar(*bolas[j])){
-				bolas[j]->vida-=10;
-				bolas[j]->colisiones++;
-				bolas[i]->vida-=10;
-				bolas[i]->colisiones++;
-			}
-		}
-		if(jugador->chocar(*bolas[i])){
-			jugador->vida-=10;
-			bolas[i]->vida-=10;
-		}
-	}
+	movimientoChoqueBolas(bolas);
+	
+	
 	
 	/*CONTROLAR CHOQUE CON POWERUPS*/
 	
@@ -407,6 +446,12 @@ void MainWindow::crearPowerUps(){
 
 void MainWindow::slotDChartColisiones(){
 	DChartColisiones * dialogo = new DChartColisiones(bolas);
+	dialogo->show();
+}
+
+
+void MainWindow::slotDTreeView(){
+	DTreeView * dialogo = new DTreeView(&bolas);
 	dialogo->show();
 }
 
