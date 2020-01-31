@@ -19,6 +19,8 @@ public:
 	static const int vidaInicial = 100;
 
 	int vida;
+	static int contId;
+	int id;
 	int colisiones;
         float x;
 	float y;

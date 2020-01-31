@@ -21,6 +21,7 @@ public:
 	
 	
 	
+	
 public slots:
 
 	
@@ -42,8 +43,11 @@ public:
 	int rowCount(const QModelIndex &)const;
 	int columnCount(const QModelIndex &)const;
 	QVariant data(const QModelIndex &, int) const;
+	int topBolasCount() const;
+	Bola * topBola(int) const;
 	
-
+	QModelIndex index ( int row, int column, const QModelIndex & parent  ) const; 
+	QModelIndex parent ( const QModelIndex & index ) const; 
 	
 	
 	

@@ -96,3 +96,5 @@ QVariant MiModelo::headerData(int section, Qt::Orientation orientation, int role
 
 
 
+
+
