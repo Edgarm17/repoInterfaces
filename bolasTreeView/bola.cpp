@@ -2,11 +2,15 @@
 #include <math.h>
 #include <QPainter>
 
+int Bola::contId;
+
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad)
 {
+	pare = NULL;
 	jugador = esJugador;
 	seleccionada = false;
 	colisiones = 0;
+	id = contId ++;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -23,9 +27,11 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad,
 	QImage img)
 {
+	pare = NULL;
 	jugador = esJugador;
 	seleccionada = false;
 	colisiones = 0;
+	id = contId ++;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -42,9 +48,11 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad, QColor col) :
 	 Bola(esJugador,posX,posY,velX,velY,radio)
 {
+	pare = NULL;
 	jugador = esJugador;
 	seleccionada = false;
 	colisiones = 0;
+	id = contId ++;
 	x = posX;
 	y = posY;
 	vX = velX;
@@ -75,6 +83,7 @@ void Bola::pintarBola(QPainter & pintor){
 			}else{
 				pintor.setBrush(color);
 				pintor.drawEllipse(x,y,radio,radio);
+				pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
 			}
 			
 		}
