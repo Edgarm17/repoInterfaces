@@ -178,13 +178,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		InfoDialog.h \
 		mainwindow.h \
 		PowerUp.h \
-		ui_DChartColisiones.h \
-		ui_DControlBolas.h \
-		ui_DExamenDAM.h \
-		ui_DialogoTabla.h \
-		ui_DTreeView.h \
-		ui_InfoDialog.h \
-		ui_widgetBola.h \
 		widgetBola.h bola.cpp \
 		DChartColisiones.cpp \
 		DControlBolas.cpp \
@@ -385,7 +378,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents bola.h DChartColisiones.h DControlBolas.h DExamenDAM.h DialogoTabla.h DTreeView.h InfoDialog.h mainwindow.h PowerUp.h ui_DChartColisiones.h ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_DTreeView.h ui_InfoDialog.h ui_widgetBola.h widgetBola.h $(DISTDIR)/
+	$(COPY_FILE) --parents bola.h DChartColisiones.h DControlBolas.h DExamenDAM.h DialogoTabla.h DTreeView.h InfoDialog.h mainwindow.h PowerUp.h widgetBola.h $(DISTDIR)/
 	$(COPY_FILE) --parents bola.cpp DChartColisiones.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp DTreeView.cpp InfoDialog.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents DChartColisiones.ui DControlBolas.ui DExamenDAM.ui DialogoTabla.ui DTreeView.ui InfoDialog.ui widgetBola.ui $(DISTDIR)/
 
