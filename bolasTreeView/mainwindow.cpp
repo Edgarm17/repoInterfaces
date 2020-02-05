@@ -60,6 +60,16 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
     	setMouseTracking(true);
     	setAcceptDrops(true);
     	
+    	if(QSystemTrayIcon::isSystemTrayAvailable() == true ) {
+    	
+    		QIcon icon = QIcon("./img/bolasIcon.png");
+    		trayIcon = new QSystemTrayIcon(this);
+    		trayIcon->setContextMenu(menuDialogos);
+    		trayIcon->setIcon(icon);
+    		trayIcon->show();
+    		
+    	}
+    	
 }
 
 void MainWindow::crearQActions(){

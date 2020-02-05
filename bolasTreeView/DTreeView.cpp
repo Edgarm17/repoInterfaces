@@ -12,6 +12,7 @@ DTreeView::DTreeView(QVector<Bola*> * bolas,QWidget * parent) : QDialog(parent){
 	this->bolas = bolas;
 	modelo = new ModelTree(bolas);
 	treeBolas->setModel(modelo);
+	treeBolas->setEditTriggers(QAbstractItemView::DoubleClicked);
 	
 	QTimer * temporizador = new QTimer();
     	temporizador->setSingleShot(false);
@@ -22,6 +23,8 @@ DTreeView::DTreeView(QVector<Bola*> * bolas,QWidget * parent) : QDialog(parent){
     	temporizador->start();
 
 	connect(btnTreeview,SIGNAL(clicked()),this,SLOT(slotBoton()));
+	//connect(treeBolas,SIGNAL(doubleClicked(const QModelIndex &)),
+	//this,SLOT(edit(const QModelIndex &, QAbstractItemView::EditTrigger , QEvent *)));
 
 }
 
@@ -30,8 +33,23 @@ void DTreeView::slotTemporizador(){
 }
 
 void DTreeView::slotBoton(){
+	delete modelo;
 	modelo = new ModelTree(bolas);
+	
 	treeBolas->setModel(modelo);
+}
+
+//void DTreeView::edit(const QModelIndex &){
+
+//}
+
+bool DTreeView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger trigger, QEvent *event){
+	
+	if(index.isValid() && trigger == QAbstractItemView::DoubleClicked){
+		return true;
+	}
+	return true;
+	
 }
 
 ModelTree::ModelTree(QVector<Bola*> * bolas,QObject *parent) : QAbstractItemModel(parent){
@@ -64,6 +82,19 @@ int ModelTree::columnCount(const QModelIndex &parent)const{
 	
 }
 
+QVariant ModelTree::headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const{
+
+	if(role != Qt::DisplayRole ) return QVariant();
+
+	if(orientation == Qt::Horizontal){
+		if(section == 0) return QString("Bolas");
+		if(section == 1) return QString("PosX");
+		if(section == 2) return QString("PosY");
+		
+	}
+
+}
+
 bool ModelTree::setData(const QModelIndex & index, const QVariant & value, int role){
 
 	
@@ -73,20 +104,21 @@ bool ModelTree::setData(const QModelIndex & index, const QVariant & value, int r
 
 		//Bola * b = qvariant_cast<Bola*>(value);
 		//bolas->replace(index.row(), value);
-		//emit dataChanged(index,index);
+		//
 		//return true;
 
-		//Bola * b = static_cast<Bola*> (index.internalPointer());
-		//
-		//if(index.column() == 0){
-		//	
-		//}else if(index.column() == 1){
-		//	b->x = value.toFloat();
-		//	return true;
-		//}else if(index.column() == 2){
-		//	b->y = value.toFloat();
-		//	return true;
-		//}
+		Bola * b = static_cast<Bola*> (index.internalPointer());
+		
+		if(index.column() == 0){
+			
+		}else if(index.column() == 1){
+			b->x = value.toFloat();
+			return true;
+		}else if(index.column() == 2){
+			b->y = value.toFloat();
+			return true;
+		}
+		emit dataChanged(index,index);
 	}
 
 	return false;
@@ -209,6 +241,8 @@ Bola * ModelTree::topBola(int posicion) const{
 
 	
 }
+
+
 
 
 

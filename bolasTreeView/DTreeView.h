@@ -26,6 +26,7 @@ public slots:
 
 	void slotTemporizador();
 	void slotBoton();
+	bool edit(const QModelIndex &, QAbstractItemView::EditTrigger , QEvent *);
 	
 private: 
 
@@ -44,6 +45,7 @@ public:
 	int rowCount(const QModelIndex &)const;
 	int columnCount(const QModelIndex &)const;
 	QVariant data(const QModelIndex &, int) const;
+	QVariant headerData(int , Qt::Orientation , int ) const;
 	bool setData(const QModelIndex & , const QVariant & , int );
 	int topBolasCount() const;
 	Bola * topBola(int) const;

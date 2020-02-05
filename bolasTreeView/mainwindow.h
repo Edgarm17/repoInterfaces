@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <QVector>
 #include <QPoint>
+#include <QSystemTrayIcon>
 #include "PowerUp.h"
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -60,6 +61,7 @@ private:
 	Bola * jugador;
 	QVector<Bola*> bolas;
 	QVector<PowerUp*> powerUps;
+	QSystemTrayIcon * trayIcon;
 	
         
 public slots:
@@ -71,6 +73,10 @@ public slots:
 	void slotDControlBolas();
 	void slotDChartColisiones();
 	void slotDTreeView();
+	
+signals:
+
+	//jugadorChoqued(int, int);
 
 };
 
