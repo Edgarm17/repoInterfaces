@@ -2,7 +2,7 @@
 #include "bola.h"
 #include <QVector>
 #include <QDebug>
-
+#include <QTimer>
 
 DTreeView::DTreeView(QVector<Bola*> * bolas,QWidget * parent) : QDialog(parent){
 
@@ -13,8 +13,25 @@ DTreeView::DTreeView(QVector<Bola*> * bolas,QWidget * parent) : QDialog(parent){
 	modelo = new ModelTree(bolas);
 	treeBolas->setModel(modelo);
 	
+	QTimer * temporizador = new QTimer();
+    	temporizador->setSingleShot(false);
+    	temporizador->setInterval(300);
 
+	connect(temporizador,SIGNAL(timeout()),this,
+    	SLOT(slotTemporizador()));
+    	temporizador->start();
+
+	connect(btnTreeview,SIGNAL(clicked()),this,SLOT(slotBoton()));
+
+}
+
+void DTreeView::slotTemporizador(){
 	
+}
+
+void DTreeView::slotBoton(){
+	modelo = new ModelTree(bolas);
+	treeBolas->setModel(modelo);
 }
 
 ModelTree::ModelTree(QVector<Bola*> * bolas,QObject *parent) : QAbstractItemModel(parent){
@@ -25,7 +42,6 @@ ModelTree::ModelTree(QVector<Bola*> * bolas,QObject *parent) : QAbstractItemMode
 }
 
 int ModelTree::rowCount(const QModelIndex &parent)const{
-	//qDebug() << topBolasCount() << endl;
 	if(!parent.isValid()){
 		return topBolasCount();
 	}
@@ -48,6 +64,36 @@ int ModelTree::columnCount(const QModelIndex &parent)const{
 	
 }
 
+bool ModelTree::setData(const QModelIndex & index, const QVariant & value, int role){
+
+	
+	if(!index.isValid())	return false;	
+	
+	if( role == Qt::EditRole){
+
+		//Bola * b = qvariant_cast<Bola*>(value);
+		//bolas->replace(index.row(), value);
+		//emit dataChanged(index,index);
+		//return true;
+
+		//Bola * b = static_cast<Bola*> (index.internalPointer());
+		//
+		//if(index.column() == 0){
+		//	
+		//}else if(index.column() == 1){
+		//	b->x = value.toFloat();
+		//	return true;
+		//}else if(index.column() == 2){
+		//	b->y = value.toFloat();
+		//	return true;
+		//}
+	}
+
+	return false;
+
+
+}
+
 QVariant ModelTree::data(const QModelIndex &index, int role) const{
 
 	
@@ -61,29 +107,24 @@ QVariant ModelTree::data(const QModelIndex &index, int role) const{
 	if( role == Qt::DisplayRole ) {
 		
 		if(b == NULL){
-			//qDebug() << "La bola b es nula" << endl;
 		}
 		
 		if(index.column() == 0){
 
-			//qDebug() << "hola 1" << endl;
 			return QVariant(QString::number(b->id));
 			
 		}else if(index.column() == 1){
-			//qDebug() << "hola 2" << endl;
 			return QVariant(QString::number(b->x));
 		}else if(index.column() == 2){
-			//qDebug() << "hola 3" << endl;
 			return QVariant(QString::number(b->y));
 		}
 	
 	}
 
 	if (role ==Qt::DecorationRole && b != NULL){ 
-		//qDebug()<< "Ha entrat a data i el role es decoration" << endl;
 		if(index.column() == 0){
 
-			//qDebug() << "hola 1" << endl;
+			
 			
 			return QVariant(b->color);
 			
@@ -165,12 +206,7 @@ Bola * ModelTree::topBola(int posicion) const{
 	}
 	
 	return NULL;
-	
-	
-	
-	
-	
-	
+
 	
 }
 

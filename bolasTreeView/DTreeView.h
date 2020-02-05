@@ -24,7 +24,8 @@ public:
 	
 public slots:
 
-	
+	void slotTemporizador();
+	void slotBoton();
 	
 private: 
 
@@ -43,6 +44,7 @@ public:
 	int rowCount(const QModelIndex &)const;
 	int columnCount(const QModelIndex &)const;
 	QVariant data(const QModelIndex &, int) const;
+	bool setData(const QModelIndex & , const QVariant & , int );
 	int topBolasCount() const;
 	Bola * topBola(int) const;
 	
