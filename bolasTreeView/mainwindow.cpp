@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 
 	QTimer * temporizador = new QTimer();
 	/*programar el temporizador*/
-	temporizador->setInterval(10);
+	temporizador->setInterval(30);
 	temporizador->setSingleShot(false);
 	temporizador->start();
 	/*arrancar el temporizador*/

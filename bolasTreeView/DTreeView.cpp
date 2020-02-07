@@ -97,38 +97,53 @@ QVariant ModelTree::headerData(int section, Qt::Orientation orientation, int rol
 
 bool ModelTree::setData(const QModelIndex & index, const QVariant & value, int role){
 
-	
+	qDebug() << "setData row = " << index.row()   << " column="<< index.column();
 	if(!index.isValid())	return false;	
-	
-	if( role == Qt::EditRole){
 
-		//Bola * b = qvariant_cast<Bola*>(value);
-		//bolas->replace(index.row(), value);
-		//
-		//return true;
-
+	if ( value.canConvert(QMetaType::QString)) {
+		QString valor = value.toString();
+		bool conversionOK;	
+		float valorf= valor.toFloat(&conversionOK);
+		if (!conversionOK) return false;
+		
 		Bola * b = static_cast<Bola*> (index.internalPointer());
 		
-		if(index.column() == 0){
-			
-		}else if(index.column() == 1){
-			b->x = value.toFloat();
-			return true;
-		}else if(index.column() == 2){
-			b->y = value.toFloat();
+		if(index.column() == 1){
+			b->x = valorf;
 			return true;
 		}
-		emit dataChanged(index,index);
-	}
-
+		
+		if(index.column() == 2){
+			b->y =valorf;
+			return true;
+		}
+	
+	
+	} else return false;
+	
+	
 	return false;
 
 
 }
 
+Qt::ItemFlags ModelTree::flags(const QModelIndex &index) const {
+
+
+	return Qt::ItemIsEditable| Qt::ItemIsEnabled;
+
+
+}
+
+
 QVariant ModelTree::data(const QModelIndex &index, int role) const{
 
 	
+	/*if (role == Qt::EditRole) { 
+		qDebug() << "data called to edit ";
+		return QVariant(QString(""));
+		}
+	*/
 	if(!index.isValid()){
 		return QVariant(QString("Raiz"));
 		
@@ -136,21 +151,18 @@ QVariant ModelTree::data(const QModelIndex &index, int role) const{
 
 	Bola * b = static_cast<Bola*> (index.internalPointer());
 
-	if( role == Qt::DisplayRole ) {
+	if( role == Qt::DisplayRole || role == Qt::EditRole ) {
 		
 		if(b == NULL){
+			return QVariant(QString("error"));
 		}
 		
-		if(index.column() == 0){
-
+		if(index.column() == 0)
 			return QVariant(QString::number(b->id));
-			
-		}else if(index.column() == 1){
+ 		if(index.column() == 1)
 			return QVariant(QString::number(b->x));
-		}else if(index.column() == 2){
+		if(index.column() == 2)
 			return QVariant(QString::number(b->y));
-		}
-	
 	}
 
 	if (role ==Qt::DecorationRole && b != NULL){ 
