@@ -12,6 +12,7 @@
 #include "DialogoTabla.h"
 #include "DControlBolas.h"
 #include "DChartColisiones.h"
+#include "DPieChart.h"
 #include <QDebug>
 #include <QMimeData>
 #include <QMessageBox>
@@ -75,14 +76,17 @@ void MainWindow::crearQActions(){
 	accionExamen = new QAction("Examen",this);
 	connect(accionExamen, SIGNAL(triggered()),this, SLOT(slotExamen()));
 	
-	accionTabla = new QAction("Tabla de información",this);
+	accionTabla = new QAction("Tabla de información (TableView)",this);
 	connect(accionTabla, SIGNAL(triggered()),this, SLOT(slotInfoTabla()));
 	
-	accionControlBolas = new QAction("Control bolas",this);
+	accionControlBolas = new QAction("Control bolas (TabWidget)",this);
 	connect(accionControlBolas, SIGNAL(triggered()),this, SLOT(slotDControlBolas()));
 
-	accionDChart = new QAction("Gráfico bolas",this);
+	accionDChart = new QAction("Gráfico barras ",this);
 	connect(accionDChart, SIGNAL(triggered()),this, SLOT(slotDChartColisiones()));
+
+	accionPieChart = new QAction("Gráfico pastel ",this);
+	connect(accionPieChart, SIGNAL(triggered()),this, SLOT(slotPieChart()));
 }
 
 void MainWindow::crearMenus(){
@@ -94,6 +98,7 @@ void MainWindow::crearMenus(){
         menuDialogos->addAction(accionTabla);
         menuDialogos->addAction(accionControlBolas);
 	menuDialogos->addAction(accionDChart);
+	menuDialogos->addAction(accionPieChart);
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
         this->addAction(accionDialogo);
 	this->addAction(accionExamen);
@@ -271,7 +276,7 @@ void MainWindow::movimientoChoqueBolas( QVector<BolaYWidget*> & vector){
 				vector[j]->colisiones++;
 				vector[i]->vida-=10;
 				vector[i]->colisiones++;
-				
+				/*
 				if(rand()%100 < 20 && bolasTotales < 15){
 					float posX = rand()%800;
 					float posY = rand()%600;
@@ -290,6 +295,7 @@ void MainWindow::movimientoChoqueBolas( QVector<BolaYWidget*> & vector){
 					bolas.append(nuevaBola);
 					bolasTotales++;
 				}
+				*/
 			}
 		}
 		if(jugador->chocar(*bolas[i])){
@@ -436,6 +442,11 @@ void MainWindow::slotDControlBolas(void){
 
 void MainWindow::slotDChartColisiones(){
 	DChartColisiones * dialogo = new DChartColisiones(bolas);
+	dialogo->show();
+}
+
+void MainWindow::slotPieChart(){
+	DPieChart * dialogo = new DPieChart(bolas);
 	dialogo->show();
 }
 

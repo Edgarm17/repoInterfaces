@@ -58,6 +58,7 @@ SOURCES       = bola.cpp \
 		DControlBolas.cpp \
 		DExamenDAM.cpp \
 		DialogoTabla.cpp \
+		DPieChart.cpp \
 		InfoDialog.cpp \
 		main.cpp \
 		mainwindow.cpp \
@@ -67,6 +68,7 @@ SOURCES       = bola.cpp \
 		moc_DControlBolas.cpp \
 		moc_DExamenDAM.cpp \
 		moc_DialogoTabla.cpp \
+		moc_DPieChart.cpp \
 		moc_InfoDialog.cpp \
 		moc_mainwindow.cpp \
 		moc_widgetBola.cpp
@@ -76,6 +78,7 @@ OBJECTS       = bola.o \
 		DControlBolas.o \
 		DExamenDAM.o \
 		DialogoTabla.o \
+		DPieChart.o \
 		InfoDialog.o \
 		main.o \
 		mainwindow.o \
@@ -86,6 +89,7 @@ OBJECTS       = bola.o \
 		moc_DControlBolas.o \
 		moc_DExamenDAM.o \
 		moc_DialogoTabla.o \
+		moc_DPieChart.o \
 		moc_InfoDialog.o \
 		moc_mainwindow.o \
 		moc_widgetBola.o
@@ -175,6 +179,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		DControlBolas.h \
 		DExamenDAM.h \
 		DialogoTabla.h \
+		DPieChart.h \
 		InfoDialog.h \
 		mainwindow.h \
 		PowerUp.h \
@@ -185,6 +190,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		DControlBolas.cpp \
 		DExamenDAM.cpp \
 		DialogoTabla.cpp \
+		DPieChart.cpp \
 		InfoDialog.cpp \
 		main.cpp \
 		mainwindow.cpp \
@@ -198,7 +204,7 @@ TARGET        = examenBolas
 first: all
 ####### Build rules
 
-examenBolas: ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_InfoDialog.h ui_widgetBola.h $(OBJECTS)  
+examenBolas: ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_DPieChart.h ui_InfoDialog.h ui_widgetBola.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: examenBolas.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -379,9 +385,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents bola.h BolaYWidget.h DChartColisiones.h DControlBolas.h DExamenDAM.h DialogoTabla.h InfoDialog.h mainwindow.h PowerUp.h ui_DChartColisiones.h widgetBola.h $(DISTDIR)/
-	$(COPY_FILE) --parents bola.cpp BolaYWidget.cpp DChartColisiones.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp InfoDialog.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents DControlBolas.ui DExamenDAM.ui DialogoTabla.ui InfoDialog.ui widgetBola.ui $(DISTDIR)/
+	$(COPY_FILE) --parents bola.h BolaYWidget.h DChartColisiones.h DControlBolas.h DExamenDAM.h DialogoTabla.h DPieChart.h InfoDialog.h mainwindow.h PowerUp.h ui_DChartColisiones.h widgetBola.h $(DISTDIR)/
+	$(COPY_FILE) --parents bola.cpp BolaYWidget.cpp DChartColisiones.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp DPieChart.cpp InfoDialog.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents DControlBolas.ui DExamenDAM.ui DialogoTabla.ui DPieChart.ui InfoDialog.ui widgetBola.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -413,9 +419,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_BolaYWidget.cpp moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
+compiler_moc_header_make_all: moc_BolaYWidget.cpp moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_DPieChart.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_BolaYWidget.cpp moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
+	-$(DEL_FILE) moc_BolaYWidget.cpp moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_DPieChart.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
 moc_BolaYWidget.cpp: BolaYWidget.h \
 		widgetBola.h \
 		ui_widgetBola.h \
@@ -469,6 +475,17 @@ moc_DialogoTabla.cpp: DialogoTabla.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DialogoTabla.h -o moc_DialogoTabla.cpp
 
+moc_DPieChart.cpp: DPieChart.h \
+		ui_DPieChart.h \
+		BolaYWidget.h \
+		widgetBola.h \
+		ui_widgetBola.h \
+		bola.h \
+		PowerUp.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DPieChart.h -o moc_DPieChart.cpp
+
 moc_InfoDialog.cpp: InfoDialog.h \
 		ui_InfoDialog.h \
 		moc_predefs.h \
@@ -499,9 +516,9 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_InfoDialog.h ui_widgetBola.h
+compiler_uic_make_all: ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_DPieChart.h ui_InfoDialog.h ui_widgetBola.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_InfoDialog.h ui_widgetBola.h
+	-$(DEL_FILE) ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_DPieChart.h ui_InfoDialog.h ui_widgetBola.h
 ui_DControlBolas.h: DControlBolas.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic DControlBolas.ui -o ui_DControlBolas.h
@@ -513,6 +530,10 @@ ui_DExamenDAM.h: DExamenDAM.ui \
 ui_DialogoTabla.h: DialogoTabla.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic DialogoTabla.ui -o ui_DialogoTabla.h
+
+ui_DPieChart.h: DPieChart.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic DPieChart.ui -o ui_DPieChart.h
 
 ui_InfoDialog.h: InfoDialog.ui \
 		/usr/lib/qt5/bin/uic
@@ -579,6 +600,15 @@ DialogoTabla.o: DialogoTabla.cpp DialogoTabla.h \
 		ui_widgetBola.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DialogoTabla.o DialogoTabla.cpp
 
+DPieChart.o: DPieChart.cpp DPieChart.h \
+		ui_DPieChart.h \
+		BolaYWidget.h \
+		widgetBola.h \
+		ui_widgetBola.h \
+		bola.h \
+		PowerUp.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DPieChart.o DPieChart.cpp
+
 InfoDialog.o: InfoDialog.cpp InfoDialog.h \
 		ui_InfoDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o InfoDialog.o InfoDialog.cpp
@@ -608,7 +638,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		DialogoTabla.h \
 		ui_DialogoTabla.h \
 		DChartColisiones.h \
-		ui_DChartColisiones.h
+		ui_DChartColisiones.h \
+		DPieChart.h \
+		ui_DPieChart.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 PowerUp.o: PowerUp.cpp PowerUp.h
@@ -634,6 +666,9 @@ moc_DExamenDAM.o: moc_DExamenDAM.cpp
 
 moc_DialogoTabla.o: moc_DialogoTabla.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DialogoTabla.o moc_DialogoTabla.cpp
+
+moc_DPieChart.o: moc_DPieChart.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DPieChart.o moc_DPieChart.cpp
 
 moc_InfoDialog.o: moc_InfoDialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_InfoDialog.o moc_InfoDialog.cpp

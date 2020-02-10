@@ -52,6 +52,7 @@ private:
 	QAction * accionTabla;
 	QAction * accionControlBolas;
 	QAction * accionDChart;
+	QAction * accionPieChart;
 	QMenu * menuArchivo;
 	QMenu * menuDialogos;
 	BolaYWidget * jugador;
@@ -68,6 +69,7 @@ public slots:
 	void slotInfoTabla();
 	void slotDControlBolas();
 	void slotDChartColisiones();
+	void slotPieChart();
 };
 
 #endif 
