@@ -6,6 +6,7 @@
 #include "bola.h"
 #include <QVector>
 #include <BolaYWidget.h>
+#include <QFile>
 class MiModelo;
 
 class DialogoTabla : public QDialog, public Ui::DialogoTabla {
@@ -18,8 +19,11 @@ public:
 	DialogoTabla(QVector<BolaYWidget*> *,QWidget * parent = 0);
 	QVector<BolaYWidget*> * bolas;
 	MiModelo * modelo;
+	QFile * fichero;
 	
-private: 
+public slots:
+
+	void slotTablaClicked(const QModelIndex &); 
 
 	
 	
@@ -38,6 +42,8 @@ public:
 	int columnCount(const QModelIndex &)const;
 	QVariant data(const QModelIndex &, int) const;
 	QVariant headerData(int , Qt::Orientation , int ) const;
+
+	Qt::ItemFlags flags(const QModelIndex &) const;
 	
 	
 };

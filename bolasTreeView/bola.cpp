@@ -66,6 +66,11 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	
 }
 
+void Bola::parar(){
+	vX = 0;
+	vY = 0;
+}
+
 void Bola::pintarBola(QPainter & pintor){
 
 	if(jugador){

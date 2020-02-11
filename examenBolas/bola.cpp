@@ -61,17 +61,26 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vida = vidaInicial;
 	color = col;
 	imagen = QImage("./img/batman.png");
-	imagen.scaled(Bola::radio,Bola::radio);
+	imagen.scaled(Bola::radio, Bola::radio, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+	//imagen.scaled(Bola::radio/2,Bola::radio/2);
 	mostrarImagen = true;
 	
+}
+
+void Bola::parar(){
+
+	vX = 0;
+	vY = 0;
+
 }
 
 void Bola::pintarBola(QPainter & pintor){
 
 	if(jugador){
-		pintor.setBrush((QBrush(Qt::black)));
-		pintor.setPen(Qt::red);
-		pintor.drawEllipse(x,y,radio,radio);
+		pintor.drawImage(x,y,imagen);
+		//pintor.setBrush((QBrush(Qt::black)));
+		//pintor.setPen(Qt::red);
+		//pintor.drawEllipse(x,y,radio,radio);
 	}else{
 		if(seleccionada){
 			pintor.setBrush(Qt::FDiagPattern);

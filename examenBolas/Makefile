@@ -54,43 +54,27 @@ OBJECTS_DIR   = ./
 
 SOURCES       = bola.cpp \
 		BolaYWidget.cpp \
-		DChartColisiones.cpp \
-		DControlBolas.cpp \
-		DExamenDAM.cpp \
-		DialogoTabla.cpp \
-		DPieChart.cpp \
-		InfoDialog.cpp \
+		DExamenTab.cpp \
+		DialogSegon.cpp \
 		main.cpp \
 		mainwindow.cpp \
 		PowerUp.cpp \
 		widgetBola.cpp moc_BolaYWidget.cpp \
-		moc_DChartColisiones.cpp \
-		moc_DControlBolas.cpp \
-		moc_DExamenDAM.cpp \
-		moc_DialogoTabla.cpp \
-		moc_DPieChart.cpp \
-		moc_InfoDialog.cpp \
+		moc_DExamenTab.cpp \
+		moc_DialogSegon.cpp \
 		moc_mainwindow.cpp \
 		moc_widgetBola.cpp
 OBJECTS       = bola.o \
 		BolaYWidget.o \
-		DChartColisiones.o \
-		DControlBolas.o \
-		DExamenDAM.o \
-		DialogoTabla.o \
-		DPieChart.o \
-		InfoDialog.o \
+		DExamenTab.o \
+		DialogSegon.o \
 		main.o \
 		mainwindow.o \
 		PowerUp.o \
 		widgetBola.o \
 		moc_BolaYWidget.o \
-		moc_DChartColisiones.o \
-		moc_DControlBolas.o \
-		moc_DExamenDAM.o \
-		moc_DialogoTabla.o \
-		moc_DPieChart.o \
-		moc_InfoDialog.o \
+		moc_DExamenTab.o \
+		moc_DialogSegon.o \
 		moc_mainwindow.o \
 		moc_widgetBola.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -175,23 +159,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		examenBolas.pro bola.h \
 		BolaYWidget.h \
-		DChartColisiones.h \
-		DControlBolas.h \
-		DExamenDAM.h \
-		DialogoTabla.h \
-		DPieChart.h \
-		InfoDialog.h \
+		DExamenTab.h \
+		DialogSegon.h \
 		mainwindow.h \
 		PowerUp.h \
-		ui_DChartColisiones.h \
+		ui_widgetBola.h \
 		widgetBola.h bola.cpp \
 		BolaYWidget.cpp \
-		DChartColisiones.cpp \
-		DControlBolas.cpp \
-		DExamenDAM.cpp \
-		DialogoTabla.cpp \
-		DPieChart.cpp \
-		InfoDialog.cpp \
+		DExamenTab.cpp \
+		DialogSegon.cpp \
 		main.cpp \
 		mainwindow.cpp \
 		PowerUp.cpp \
@@ -204,7 +180,7 @@ TARGET        = examenBolas
 first: all
 ####### Build rules
 
-examenBolas: ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_DPieChart.h ui_InfoDialog.h ui_widgetBola.h $(OBJECTS)  
+examenBolas: ui_DExamenTab.h ui_DialogSegon.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: examenBolas.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -385,9 +361,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents bola.h BolaYWidget.h DChartColisiones.h DControlBolas.h DExamenDAM.h DialogoTabla.h DPieChart.h InfoDialog.h mainwindow.h PowerUp.h ui_DChartColisiones.h widgetBola.h $(DISTDIR)/
-	$(COPY_FILE) --parents bola.cpp BolaYWidget.cpp DChartColisiones.cpp DControlBolas.cpp DExamenDAM.cpp DialogoTabla.cpp DPieChart.cpp InfoDialog.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents DControlBolas.ui DExamenDAM.ui DialogoTabla.ui DPieChart.ui InfoDialog.ui widgetBola.ui $(DISTDIR)/
+	$(COPY_FILE) --parents bola.h BolaYWidget.h DExamenTab.h DialogSegon.h mainwindow.h PowerUp.h ui_widgetBola.h widgetBola.h $(DISTDIR)/
+	$(COPY_FILE) --parents bola.cpp BolaYWidget.cpp DExamenTab.cpp DialogSegon.cpp main.cpp mainwindow.cpp PowerUp.cpp widgetBola.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents DExamenTab.ui DialogSegon.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -419,9 +395,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_BolaYWidget.cpp moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_DPieChart.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
+compiler_moc_header_make_all: moc_BolaYWidget.cpp moc_DExamenTab.cpp moc_DialogSegon.cpp moc_mainwindow.cpp moc_widgetBola.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_BolaYWidget.cpp moc_DChartColisiones.cpp moc_DControlBolas.cpp moc_DExamenDAM.cpp moc_DialogoTabla.cpp moc_DPieChart.cpp moc_InfoDialog.cpp moc_mainwindow.cpp moc_widgetBola.cpp
+	-$(DEL_FILE) moc_BolaYWidget.cpp moc_DExamenTab.cpp moc_DialogSegon.cpp moc_mainwindow.cpp moc_widgetBola.cpp
 moc_BolaYWidget.cpp: BolaYWidget.h \
 		widgetBola.h \
 		ui_widgetBola.h \
@@ -431,8 +407,8 @@ moc_BolaYWidget.cpp: BolaYWidget.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include BolaYWidget.h -o moc_BolaYWidget.cpp
 
-moc_DChartColisiones.cpp: DChartColisiones.h \
-		ui_DChartColisiones.h \
+moc_DExamenTab.cpp: DExamenTab.h \
+		ui_DExamenTab.h \
 		BolaYWidget.h \
 		widgetBola.h \
 		ui_widgetBola.h \
@@ -440,10 +416,10 @@ moc_DChartColisiones.cpp: DChartColisiones.h \
 		PowerUp.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DChartColisiones.h -o moc_DChartColisiones.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DExamenTab.h -o moc_DExamenTab.cpp
 
-moc_DControlBolas.cpp: DControlBolas.h \
-		ui_DControlBolas.h \
+moc_DialogSegon.cpp: DialogSegon.h \
+		ui_DialogSegon.h \
 		BolaYWidget.h \
 		widgetBola.h \
 		ui_widgetBola.h \
@@ -451,46 +427,7 @@ moc_DControlBolas.cpp: DControlBolas.h \
 		PowerUp.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DControlBolas.h -o moc_DControlBolas.cpp
-
-moc_DExamenDAM.cpp: DExamenDAM.h \
-		ui_DExamenDAM.h \
-		bola.h \
-		PowerUp.h \
-		BolaYWidget.h \
-		widgetBola.h \
-		ui_widgetBola.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DExamenDAM.h -o moc_DExamenDAM.cpp
-
-moc_DialogoTabla.cpp: DialogoTabla.h \
-		ui_DialogoTabla.h \
-		bola.h \
-		PowerUp.h \
-		BolaYWidget.h \
-		widgetBola.h \
-		ui_widgetBola.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DialogoTabla.h -o moc_DialogoTabla.cpp
-
-moc_DPieChart.cpp: DPieChart.h \
-		ui_DPieChart.h \
-		BolaYWidget.h \
-		widgetBola.h \
-		ui_widgetBola.h \
-		bola.h \
-		PowerUp.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DPieChart.h -o moc_DPieChart.cpp
-
-moc_InfoDialog.cpp: InfoDialog.h \
-		ui_InfoDialog.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include InfoDialog.h -o moc_InfoDialog.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include DialogSegon.h -o moc_DialogSegon.cpp
 
 moc_mainwindow.cpp: mainwindow.h \
 		BolaYWidget.h \
@@ -498,8 +435,10 @@ moc_mainwindow.cpp: mainwindow.h \
 		ui_widgetBola.h \
 		bola.h \
 		PowerUp.h \
-		DControlBolas.h \
-		ui_DControlBolas.h \
+		DExamenTab.h \
+		ui_DExamenTab.h \
+		DialogSegon.h \
+		ui_DialogSegon.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/edgar/repoInterfaces/examenBolas/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/edgar/repoInterfaces/examenBolas -I/home/edgar/repoInterfaces/examenBolas -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCharts -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/8 -I/usr/include/x86_64-linux-gnu/c++/8 -I/usr/include/c++/8/backward -I/usr/lib/gcc/x86_64-linux-gnu/8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.h -o moc_mainwindow.cpp
@@ -516,32 +455,16 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_DPieChart.h ui_InfoDialog.h ui_widgetBola.h
+compiler_uic_make_all: ui_DExamenTab.h ui_DialogSegon.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_DControlBolas.h ui_DExamenDAM.h ui_DialogoTabla.h ui_DPieChart.h ui_InfoDialog.h ui_widgetBola.h
-ui_DControlBolas.h: DControlBolas.ui \
+	-$(DEL_FILE) ui_DExamenTab.h ui_DialogSegon.h
+ui_DExamenTab.h: DExamenTab.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic DControlBolas.ui -o ui_DControlBolas.h
+	/usr/lib/qt5/bin/uic DExamenTab.ui -o ui_DExamenTab.h
 
-ui_DExamenDAM.h: DExamenDAM.ui \
+ui_DialogSegon.h: DialogSegon.ui \
 		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic DExamenDAM.ui -o ui_DExamenDAM.h
-
-ui_DialogoTabla.h: DialogoTabla.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic DialogoTabla.ui -o ui_DialogoTabla.h
-
-ui_DPieChart.h: DPieChart.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic DPieChart.ui -o ui_DPieChart.h
-
-ui_InfoDialog.h: InfoDialog.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic InfoDialog.ui -o ui_InfoDialog.h
-
-ui_widgetBola.h: widgetBola.ui \
-		/usr/lib/qt5/bin/uic
-	/usr/lib/qt5/bin/uic widgetBola.ui -o ui_widgetBola.h
+	/usr/lib/qt5/bin/uic DialogSegon.ui -o ui_DialogSegon.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -564,54 +487,23 @@ BolaYWidget.o: BolaYWidget.cpp BolaYWidget.h \
 		PowerUp.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BolaYWidget.o BolaYWidget.cpp
 
-DChartColisiones.o: DChartColisiones.cpp DChartColisiones.h \
-		ui_DChartColisiones.h \
+DExamenTab.o: DExamenTab.cpp DExamenTab.h \
+		ui_DExamenTab.h \
 		BolaYWidget.h \
 		widgetBola.h \
 		ui_widgetBola.h \
 		bola.h \
 		PowerUp.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DChartColisiones.o DChartColisiones.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DExamenTab.o DExamenTab.cpp
 
-DControlBolas.o: DControlBolas.cpp DControlBolas.h \
-		ui_DControlBolas.h \
+DialogSegon.o: DialogSegon.cpp DialogSegon.h \
+		ui_DialogSegon.h \
 		BolaYWidget.h \
 		widgetBola.h \
 		ui_widgetBola.h \
 		bola.h \
 		PowerUp.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DControlBolas.o DControlBolas.cpp
-
-DExamenDAM.o: DExamenDAM.cpp DExamenDAM.h \
-		ui_DExamenDAM.h \
-		bola.h \
-		PowerUp.h \
-		BolaYWidget.h \
-		widgetBola.h \
-		ui_widgetBola.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DExamenDAM.o DExamenDAM.cpp
-
-DialogoTabla.o: DialogoTabla.cpp DialogoTabla.h \
-		ui_DialogoTabla.h \
-		bola.h \
-		PowerUp.h \
-		BolaYWidget.h \
-		widgetBola.h \
-		ui_widgetBola.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DialogoTabla.o DialogoTabla.cpp
-
-DPieChart.o: DPieChart.cpp DPieChart.h \
-		ui_DPieChart.h \
-		BolaYWidget.h \
-		widgetBola.h \
-		ui_widgetBola.h \
-		bola.h \
-		PowerUp.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DPieChart.o DPieChart.cpp
-
-InfoDialog.o: InfoDialog.cpp InfoDialog.h \
-		ui_InfoDialog.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o InfoDialog.o InfoDialog.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DialogSegon.o DialogSegon.cpp
 
 main.o: main.cpp mainwindow.h \
 		BolaYWidget.h \
@@ -619,8 +511,10 @@ main.o: main.cpp mainwindow.h \
 		ui_widgetBola.h \
 		bola.h \
 		PowerUp.h \
-		DControlBolas.h \
-		ui_DControlBolas.h
+		DExamenTab.h \
+		ui_DExamenTab.h \
+		DialogSegon.h \
+		ui_DialogSegon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
@@ -629,18 +523,10 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		ui_widgetBola.h \
 		bola.h \
 		PowerUp.h \
-		DControlBolas.h \
-		ui_DControlBolas.h \
-		InfoDialog.h \
-		ui_InfoDialog.h \
-		DExamenDAM.h \
-		ui_DExamenDAM.h \
-		DialogoTabla.h \
-		ui_DialogoTabla.h \
-		DChartColisiones.h \
-		ui_DChartColisiones.h \
-		DPieChart.h \
-		ui_DPieChart.h
+		DExamenTab.h \
+		ui_DExamenTab.h \
+		DialogSegon.h \
+		ui_DialogSegon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 PowerUp.o: PowerUp.cpp PowerUp.h
@@ -655,23 +541,11 @@ widgetBola.o: widgetBola.cpp widgetBola.h \
 moc_BolaYWidget.o: moc_BolaYWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_BolaYWidget.o moc_BolaYWidget.cpp
 
-moc_DChartColisiones.o: moc_DChartColisiones.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DChartColisiones.o moc_DChartColisiones.cpp
+moc_DExamenTab.o: moc_DExamenTab.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DExamenTab.o moc_DExamenTab.cpp
 
-moc_DControlBolas.o: moc_DControlBolas.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DControlBolas.o moc_DControlBolas.cpp
-
-moc_DExamenDAM.o: moc_DExamenDAM.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DExamenDAM.o moc_DExamenDAM.cpp
-
-moc_DialogoTabla.o: moc_DialogoTabla.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DialogoTabla.o moc_DialogoTabla.cpp
-
-moc_DPieChart.o: moc_DPieChart.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DPieChart.o moc_DPieChart.cpp
-
-moc_InfoDialog.o: moc_InfoDialog.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_InfoDialog.o moc_InfoDialog.cpp
+moc_DialogSegon.o: moc_DialogSegon.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DialogSegon.o moc_DialogSegon.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

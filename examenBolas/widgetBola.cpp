@@ -14,8 +14,7 @@ WidgetBola::WidgetBola(Bola * bola,QWidget * parent) : QWidget(parent){
 
 void WidgetBola::slotPararBola(void){
 
-	bola->vX = 0;
-	bola->vY = 0;
+	bola->parar();
 
 }
 
@@ -24,8 +23,10 @@ void WidgetBola::slotElegirColor(void){
 
 	QColor colorElegido = QColorDialog::getColor(Qt::white,this,"Elige un color");
 	if( colorElegido.isValid() ){
-	
+		
+		bola->mostrarImagen = false;
 		bola->color = colorElegido;
+		
 		
 	}
 }

@@ -13,6 +13,7 @@ public:
 	void pintarBola(QPainter &);
 	void pintarVida(QPainter &);
 	void mover(float, float);
+	void parar();
 	bool chocar(Bola &);
 	float distanciaPU(float,float);
 	float calcDistancia(Bola );

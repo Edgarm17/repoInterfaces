@@ -1,6 +1,9 @@
 #include "DialogoTabla.h"
 #include "bola.h"
 #include "BolaYWidget.h"
+#include <QDebug>
+#include <QMessageBox>
+#include <QFileDialog>
 DialogoTabla::DialogoTabla(QVector<BolaYWidget*> * bolas,QWidget * parent) : QDialog(parent){
 
 	setupUi(this);
@@ -10,6 +13,9 @@ DialogoTabla::DialogoTabla(QVector<BolaYWidget*> * bolas,QWidget * parent) : QDi
 	modelo = new MiModelo(bolas);
 	tableView->setModel(modelo);
 	this->adjustSize();
+	fichero = new QFile("bolas.txt");
+
+	connect(tableView,SIGNAL(clicked(const QModelIndex &)),this,SLOT(slotTablaClicked(const QModelIndex &)));
 	
 	
 }
@@ -77,6 +83,62 @@ QVariant MiModelo::headerData(int section, Qt::Orientation orientation, int role
 		if(section == 3) return QString("Bola 4");
 		if(section == 4) return QString("Bola 5");
 	}
+
+}
+
+Qt::ItemFlags MiModelo::flags(const QModelIndex &index) const {
+
+
+	return Qt::ItemIsEditable| Qt::ItemIsEnabled;
+
+
+}
+
+void DialogoTabla::slotTablaClicked(const QModelIndex &index){
+	
+	if(!index.isValid())return;
+
+	int r = QMessageBox::warning(this,
+		"Guardar bola",
+		"Vas a guardar la bola "+QString::number(bolas->at(index.row())->Bola::id)+".\nVols continuar?",
+		QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		
+		if (r == QMessageBox::Yes ){
+			
+			if(!fichero->exists()){
+				QString ruta = QFileDialog::getSaveFileName(this,QString("Guardar documentillo"));
+				delete fichero;
+				fichero = new QFile(ruta);
+				QTextStream stream(fichero);
+				if(!fichero->open(QIODevice::WriteOnly)){
+					qDebug() << "Algo va mal en el fichero";
+					return;
+				}
+
+				stream << "Bola " << bolas->at(index.row())->Bola::id << endl;
+				fichero->close();
+			}else{
+				QTextStream stream(fichero);
+				if(!fichero->open(QIODevice::Append)){
+					qDebug() << "Algo va mal en el fichero";
+					return;
+				}
+
+				stream << "Bola " << bolas->at(index.row())->Bola::id << endl;
+				fichero->close();
+			}
+			
+			
+			
+		}
+		if( r == QMessageBox::No){
+			return;
+		}
+		if ( r == QMessageBox::Cancel ){
+			return;
+	}
+
+	qDebug() << "Bola " << QString::number(bolas->at(index.row())->Bola::id) << endl; 
 
 }
 

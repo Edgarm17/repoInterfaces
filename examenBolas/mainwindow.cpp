@@ -1,33 +1,30 @@
 #include "mainwindow.h"
-#include "InfoDialog.h"
 #include <QPainter>
 #include <QTimer>
 #include <math.h>
-#include <iostream>
-#include <stdio.h>
 #include <QVector>
 #include "BolaYWidget.h"
 #include "bola.h"
-#include "DExamenDAM.h"
-#include "DialogoTabla.h"
-#include "DControlBolas.h"
-#include "DChartColisiones.h"
-#include "DPieChart.h"
 #include <QDebug>
+#include <QAction>
+#include <QMenuBar>
 #include <QMimeData>
 #include <QMessageBox>
-#include <QAction>
 #include <QDrag>
-#include <QMenuBar>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
-
+	
+	setCursor(QCursor(QPixmap("./img/cursor.png")));
 	imagenCorazon = QImage("./img/heartPU.png");
 	vidasJugador = 5;
+	moverConRaton = false;
 	crearQActions();
 	crearMenus();
 	resize(800,600);
-
+	
+	
+	
 	bolasTotales = 0;
 
 	QTimer * temporizador = new QTimer();
@@ -50,10 +47,9 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	
 	posX = posY = 20;
 	
-    	jugador = new BolaYWidget(true,posX,posY,0.0,0.0,80);
+    	jugador = new BolaYWidget(true,posX,posY,0.0,0.0,50);
 	bolasTotales++;
     	
-    	dControlBolas = NULL ;
     	setMouseTracking(true);
 	setAcceptDrops(true);
 
@@ -66,46 +62,62 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
     		trayIcon->show();
     		
     	}
+
+	new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this, SLOT(slotMoverConRaton()));
     	
 }
 
 void MainWindow::crearQActions(){
-	accionDialogo = new QAction("Información",this);
-	connect(accionDialogo, SIGNAL(triggered()),this, SLOT(slotDialogo()));
 	
-	accionExamen = new QAction("Examen",this);
-	connect(accionExamen, SIGNAL(triggered()),this, SLOT(slotExamen()));
-	
-	accionTabla = new QAction("Tabla de información (TableView)",this);
-	connect(accionTabla, SIGNAL(triggered()),this, SLOT(slotInfoTabla()));
-	
-	accionControlBolas = new QAction("Control bolas (TabWidget)",this);
-	connect(accionControlBolas, SIGNAL(triggered()),this, SLOT(slotDControlBolas()));
+	accionDExamenTab = new QAction("Dialogo TabWidget",this);
+	connect(accionDExamenTab, SIGNAL(triggered()),this, SLOT(slotDExamenTab()));
 
-	accionDChart = new QAction("Gráfico barras ",this);
-	connect(accionDChart, SIGNAL(triggered()),this, SLOT(slotDChartColisiones()));
+	accionDialogSegon = new QAction("Dialogo Segon",this);
+	connect(accionDialogSegon, SIGNAL(triggered()),this, SLOT(slotDialogSegon()));
+	
 
-	accionPieChart = new QAction("Gráfico pastel ",this);
-	connect(accionPieChart, SIGNAL(triggered()),this, SLOT(slotPieChart()));
 }
 
 void MainWindow::crearMenus(){
 
 	menuArchivo = menuBar()->addMenu("Archivo");
 	menuDialogos = menuBar()->addMenu("Dialogos");
-        menuArchivo ->addAction(accionDialogo);
-        menuDialogos->addAction(accionExamen);
-        menuDialogos->addAction(accionTabla);
-        menuDialogos->addAction(accionControlBolas);
-	menuDialogos->addAction(accionDChart);
-	menuDialogos->addAction(accionPieChart);
+
+        menuDialogos ->addAction(accionDExamenTab);
+        menuDialogos ->addAction(accionDialogSegon);
+
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
-        this->addAction(accionDialogo);
-	this->addAction(accionExamen);
-	this->addAction(accionTabla);
-	this->addAction(accionControlBolas);
-	this->addAction(accionDChart);
+        this->addAction(accionDExamenTab);
+	this->addAction(accionDialogSegon);
 	
+	
+}
+
+void MainWindow::slotDExamenTab(void){
+	
+	dialogTab = new DExamenTab(&bolas);
+	dialogTab->show();
+}
+
+
+void MainWindow::slotDialogSegon(void){
+	
+	dialogSegon = new DialogSegon(&bolas);
+	dialogSegon->show();
+}
+
+void MainWindow::slotMoverConRaton(void){
+	
+	
+
+	if(moverConRaton){
+		qDebug() << "Movimiento con raton desactivado" ;
+		moverConRaton = false;
+	}else{
+		qDebug() << "Movimiento con raton activado" ;
+		moverConRaton = true;
+	}
+
 }
 
 void MainWindow::paintEvent(QPaintEvent *e){
@@ -118,6 +130,7 @@ void MainWindow::paintEvent(QPaintEvent *e){
 	
 	/*PINTAR BOLAS*/
 	for(int i = 0; i<bolas.size(); i++){
+		bolas[i]->mostrarImagen = false;
 		bolas[i]->pintarBola(pintor);
 	
 	}
@@ -241,24 +254,15 @@ void MainWindow::moverJugadorRaton(void){
 	float incVely = (posRatonY - jugador->Bola::y);
 	incVely = pow((incVely * 0.0012),3);
 	
-	/*
-	jugador->vX += incVelx;
-	jugador->vY += incVely;
+	if(moverConRaton){
+		jugador->vX += incVelx;
+		jugador->vY += incVely;
 	
-	jugador->vX = jugador->vX * 0.99;
-	jugador->vY = jugador->vY * 0.99;
-	*/
-}
-
-void MainWindow::slotDialogo(void){
+		jugador->vX = jugador->vX * 0.99;
+		jugador->vY = jugador->vY * 0.99;
+	}
 	
-	int numBolas = bolas.size();
-	int alto = height();
-	int ancho = width();
 	
-	InfoDialog * dialogo = new InfoDialog(numBolas,alto,ancho);
-	
-	dialogo->show();
 }
 
 void MainWindow::movimientoChoqueBolas( QVector<BolaYWidget*> & vector){
@@ -417,38 +421,13 @@ void MainWindow::dragEnterEvent ( QDragEnterEvent * event ) {
     
 }
 
-void MainWindow::slotExamen(void){
-	DExamenDAM * dialogo = new DExamenDAM(bolas);
-	dialogo->show();
-}
-
-void MainWindow::slotInfoTabla(void){
-
-	DialogoTabla * dialogo = new DialogoTabla(&bolas);
-	dialogo->show();	
 
 
-}
-
-void MainWindow::slotDControlBolas(void){
-	
-	if (dControlBolas == NULL ) 
-		dControlBolas = new DControlBolas(&bolas);
-	
-	dControlBolas->show();	
 
 
-}
 
-void MainWindow::slotDChartColisiones(){
-	DChartColisiones * dialogo = new DChartColisiones(bolas);
-	dialogo->show();
-}
 
-void MainWindow::slotPieChart(){
-	DPieChart * dialogo = new DPieChart(bolas);
-	dialogo->show();
-}
+
 
 
 

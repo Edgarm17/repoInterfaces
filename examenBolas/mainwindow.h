@@ -12,64 +12,75 @@
 #include <stdio.h>
 #include <QPoint>
 #include <QVector>
-#include "DControlBolas.h"
+#include "DExamenTab.h"
+#include "DialogSegon.h"
 class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
         MainWindow(QWidget * parent = 0, Qt::WindowFlags flags = 0);
-	void paintEvent(QPaintEvent * );
-	void keyPressEvent(QKeyEvent * e);
-	void mouseDoubleClickEvent(QMouseEvent * e);
-	void dropEvent(QDropEvent * event);
-	void dragEnterEvent( QDragEnterEvent * event );
-	void mousePressEvent(QMouseEvent *e);
-	void mouseReleaseEvent(QMouseEvent *e);
-	void mouseMoveEvent(QMouseEvent *e);
-	void moverJugadorRaton(void);
 
-private:
+	//ATRIBUTOS VARIOS
+	BolaYWidget * jugador;
+	QVector<BolaYWidget *> bolas;
+	QVector<PowerUp*> powerUps;
+	int vidasJugador;
+	int bolasTotales;
+	bool moverConRaton;
+	QImage imagenCorazon;
+	QSystemTrayIcon * trayIcon;
+	
+	//POSICION, VELOCIDAD Y RADIO DE LAS BOLAS
         float posX;
 	float posY;
 	float velX;
 	float velY;
 	float radio;
+
+	//POSICIONES Y PUNTOS RATON EN LA PANTALLA
 	float posRatonX;
 	float posRatonY;
-	void crearQActions();
-	void crearMenus();
-	void performDrag();
-	int vidasJugador;
-	int bolasTotales;
 	QPoint puntoEntrada;
 	QPoint puntoSoltar;
 	QPoint startPos;
+
+	//MÉTODOS
+	void crearQActions();
+	void crearMenus();
+	void performDrag();
+	void movimientoChoqueBolas( QVector<BolaYWidget*> & );
+	void moverJugadorRaton(void);
 	
-	QImage imagenCorazon;
-	QSystemTrayIcon * trayIcon;
-	QMouseEvent * eventoInicial;
-	QAction * accionDialogo;
-	QAction * accionExamen;
-	QAction * accionTabla;
-	QAction * accionControlBolas;
-	QAction * accionDChart;
-	QAction * accionPieChart;
+	//DIÁLOGOS
+	DExamenTab * dialogTab;
+	DialogSegon * dialogSegon;
+
+	//QACTIONS
+	QAction * accionDExamenTab;
+	QAction * accionDialogSegon;
+
+	//MENUS
 	QMenu * menuArchivo;
 	QMenu * menuDialogos;
-	BolaYWidget * jugador;
-	QVector<BolaYWidget *> bolas;
-	QVector<PowerUp*> powerUps;
-	DControlBolas * dControlBolas;
-	void movimientoChoqueBolas( QVector<BolaYWidget*> & );
+
+	//EVENTOS
+	QMouseEvent * eventoInicial;
+	void dropEvent(QDropEvent * event);
+	void dragEnterEvent( QDragEnterEvent * event );
+	void mousePressEvent(QMouseEvent *e);
+	void mouseReleaseEvent(QMouseEvent *e);
+	void mouseMoveEvent(QMouseEvent *e);
+	void paintEvent(QPaintEvent * );
+	void keyPressEvent(QKeyEvent * e);
+	void mouseDoubleClickEvent(QMouseEvent * e);
+	
         
 public slots:
 
 	void slotRepintar();
-	void slotDialogo();
-	void slotExamen();
-	void slotInfoTabla();
-	void slotDControlBolas();
-	void slotDChartColisiones();
-	void slotPieChart();
+	void slotDExamenTab();
+	void slotDialogSegon();
+	void slotMoverConRaton();
+	
 };
 
 #endif 

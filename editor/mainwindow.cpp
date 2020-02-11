@@ -21,7 +21,7 @@ VentanaPrincipal::VentanaPrincipal(QWidget * parent ,Qt::WindowFlags flags ) : Q
         editorCentral = new QTextEdit(this);
         setCentralWidget(editorCentral);
         crearQActions();
-        fichero = new QFile("");
+        fichero = new QFile("bolas.txt");
         nombreFichero = new QString(fichero->fileName());
         archivoAbierto = false;
         
