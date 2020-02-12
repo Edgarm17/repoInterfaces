@@ -19,7 +19,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vida = vidaInicial;
 	color = QColor(rand()%256,rand()%256,rand()%256);
 	imagen = QImage("./img/batman.png");
-	imagen.scaled(Bola::radio,Bola::radio);
+	imagen = imagen.scaled(Bola::radio,Bola::radio);
 	mostrarImagen = true;
 	
 }
@@ -40,7 +40,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vida = vidaInicial;
 	color = QColor(rand()%256,rand()%256,rand()%256);
 	imagen = img;
-	imagen.scaled(Bola::radio,Bola::radio);
+	imagen = imagen.scaled(Bola::radio,Bola::radio);
 	mostrarImagen = true;
 	
 }
@@ -61,7 +61,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vida = vidaInicial;
 	color = col;
 	imagen = QImage("./img/batman.png");
-	imagen.scaled(Bola::radio, Bola::radio, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+	imagen = imagen.scaled(Bola::radio, Bola::radio, Qt::IgnoreAspectRatio, Qt::FastTransformation);
 	//imagen.scaled(Bola::radio/2,Bola::radio/2);
 	mostrarImagen = true;
 	
@@ -214,7 +214,7 @@ float Bola::distanciaPU(float posX, float posY){
 
 	float distancia;
 	
-	distancia = sqrtf((powf(posX - x,2))+(powf(posY - y,2)));
+	distancia = sqrtf((powf(posX - (x+radio/2),2))+(powf(posY - (y+radio/2),2)));
 	
 	return distancia;
 	

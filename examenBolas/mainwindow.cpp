@@ -12,10 +12,10 @@
 #include <QMessageBox>
 #include <QDrag>
 #include <QShortcut>
-
+#include "DialogInfo.h"
 MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(parent,flags) {
 	
-	setCursor(QCursor(QPixmap("./img/cursor.png")));
+	//setCursor(QCursor(QPixmap("./img/cursor.png")));
 	imagenCorazon = QImage("./img/heartPU.png");
 	vidasJugador = 5;
 	moverConRaton = false;
@@ -37,17 +37,17 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	
 	/*CREAR BOLAS*/
 	for(int i = 0; i<5; i++){
-		velX = 3;
-		velY = 3;
+		velX = 2;
+		velY = 2;
 		posX = rand()%800;
 		posY = rand()%600;
-		radio = 40;
+		radio = 60;
 		bolas.append(new BolaYWidget(false,posX,posY,velX,velY,radio));
 	}
 	
 	posX = posY = 20;
 	
-    	jugador = new BolaYWidget(true,posX,posY,0.0,0.0,50);
+    	jugador = new BolaYWidget(true,posX,posY,0.0,0.0,60);
 	bolasTotales++;
     	
     	setMouseTracking(true);
@@ -74,6 +74,7 @@ void MainWindow::crearQActions(){
 
 	accionDialogSegon = new QAction("Dialogo Segon",this);
 	connect(accionDialogSegon, SIGNAL(triggered()),this, SLOT(slotDialogSegon()));
+
 	
 
 }
@@ -180,6 +181,16 @@ void MainWindow::mousePressEvent(QMouseEvent * e){
 	eventoInicial = new QMouseEvent(*e);	
 	if (e->button() == Qt::LeftButton)
         	startPos = e->pos();
+
+	QPoint p = e->pos();
+		
+	for(int i = 0; i<bolas.size(); i++){
+		if(bolas.at(i)->distanciaPU(p.x(),p.y()) <= bolas.at(i)->radio/2){
+			qDebug() << "Has tocado la bola " << bolas.at(i)->id;
+			DialogInfo * dialog = new DialogInfo(bolas.at(i));
+			dialog->show();
+		}
+	}
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *e){
@@ -346,7 +357,7 @@ void MainWindow::slotRepintar(void){
 	for(int i=0; i<bolas.size(); i++){
 		
 		for(int j = 0; j<powerUps.size(); j++){
-			if(bolas[i]->distanciaPU(powerUps[j]->posX,powerUps[j]->posY) < 40){
+			if(bolas[i]->distanciaPU(powerUps[j]->posX+(powerUps[j]->width/2),powerUps[j]->posY+(powerUps[j]->height/2)) < bolas[i]->radio){
 				powerUps.erase(powerUps.begin()+j);
 				if(bolas[i]->vida <= 800){
 				
@@ -360,7 +371,7 @@ void MainWindow::slotRepintar(void){
 	
 	for(int j = 0; j<powerUps.size(); j++){
 	
-		if(jugador->distanciaPU(powerUps[j]->posX,powerUps[j]->posY) < 40){
+		if(jugador->distanciaPU(powerUps[j]->posX+(powerUps[j]->width/2),powerUps[j]->posY+(powerUps[j]->height/2)) < jugador->radio){
 			powerUps.erase(powerUps.begin()+j);
 			if(jugador->vida <= 800){
 				
