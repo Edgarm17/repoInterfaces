@@ -19,7 +19,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vida = vidaInicial;
 	color = QColor(rand()%256,rand()%256,rand()%256);
 	imagen = QImage("./img/batman.png");
-	imagen.scaled(Bola::radio,Bola::radio);
+	imagen = imagen.scaled(Bola::radio,Bola::radio);
 	mostrarImagen = true;
 	
 }
@@ -38,9 +38,9 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vY = velY;
 	radio = rad;
 	vida = vidaInicial;
-	color = QColor(rand()%256,rand()%256,rand()%256);
+	//color = QColor(rand()%256,rand()%256,rand()%256);
 	imagen = img;
-	imagen.scaled(Bola::radio,Bola::radio);
+	imagen = imagen.scaled(Bola::radio,Bola::radio);
 	mostrarImagen = true;
 	
 }
@@ -61,8 +61,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	vida = vidaInicial;
 	color = col;
 	imagen = QImage("./img/batman.png");
-	imagen.scaled(Bola::radio,Bola::radio);
-	mostrarImagen = true;
+	imagen = imagen.scaled(Bola::radio,Bola::radio);
+	mostrarImagen = false;
 	
 }
 

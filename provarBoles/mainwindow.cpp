@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	crearQActions();
 	crearMenus();
 	resize(800,600);
-
+	dialogProva = new DialogProva();
 	bolasTotales = 0;
 
 	QTimer * temporizador = new QTimer();
@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 		velY = 3;
 		posX = rand()%800;
 		posY = rand()%600;
-		radio = 40;
+		radio = 60;
 		bolas.append(new BolaYWidget(false,posX,posY,velX,velY,radio));
 	}
 	
@@ -85,6 +85,9 @@ void MainWindow::crearQActions(){
 	accionDChart = new QAction("Gráfico barras ",this);
 	connect(accionDChart, SIGNAL(triggered()),this, SLOT(slotDChartColisiones()));
 
+	accionDProva = new QAction("Crear bola",this);
+	connect(accionDProva, SIGNAL(triggered()),this, SLOT(slotDProva()));
+
 	accionPieChart = new QAction("Gráfico pastel ",this);
 	connect(accionPieChart, SIGNAL(triggered()),this, SLOT(slotPieChart()));
 }
@@ -99,6 +102,7 @@ void MainWindow::crearMenus(){
         menuDialogos->addAction(accionControlBolas);
 	menuDialogos->addAction(accionDChart);
 	menuDialogos->addAction(accionPieChart);
+	menuDialogos->addAction(accionDProva);
         this->setContextMenuPolicy(Qt::ActionsContextMenu);
         this->addAction(accionDialogo);
 	this->addAction(accionExamen);
@@ -137,6 +141,14 @@ void MainWindow::paintEvent(QPaintEvent *e){
 	
 	
     		
+
+}
+
+void MainWindow::slotCrearBola(BolaYWidget * b){
+	
+	
+	bolas.append(b);
+	//dialogProva->close();
 
 }
 
@@ -404,9 +416,11 @@ void MainWindow::dropEvent(QDropEvent * event){
 	
 	float vX = (puntoSoltar.x() - puntoEntrada.x()) / 50.2;
 	float vY = (puntoSoltar.y() - puntoEntrada.y()) / 50.3;
-      	
+	
+	QImage img = QImage(text);      	
+	
       	BolaYWidget * nuevaBola = new BolaYWidget(false,puntoSoltar.x(),puntoSoltar.y(),vX,vY,
-      	radio,QImage(text));
+      	radio,img);
       	bolas.append(nuevaBola);
 }
 
@@ -448,6 +462,13 @@ void MainWindow::slotDChartColisiones(){
 void MainWindow::slotPieChart(){
 	DPieChart * dialogo = new DPieChart(bolas);
 	dialogo->show();
+}
+
+void MainWindow::slotDProva(){
+
+	if (dialogProva == NULL ) 
+		dialogProva = new DialogProva();
+	dialogProva->show();
 }
 
 

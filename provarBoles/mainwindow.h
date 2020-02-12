@@ -13,6 +13,7 @@
 #include <QPoint>
 #include <QVector>
 #include "DControlBolas.h"
+#include "DialogProva.h"
 class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
@@ -27,7 +28,6 @@ public:
 	void mouseMoveEvent(QMouseEvent *e);
 	void moverJugadorRaton(void);
 
-private:
         float posX;
 	float posY;
 	float velX;
@@ -53,12 +53,14 @@ private:
 	QAction * accionControlBolas;
 	QAction * accionDChart;
 	QAction * accionPieChart;
+	QAction * accionDProva;
 	QMenu * menuArchivo;
 	QMenu * menuDialogos;
 	BolaYWidget * jugador;
 	QVector<BolaYWidget *> bolas;
 	QVector<PowerUp*> powerUps;
 	DControlBolas * dControlBolas;
+	DialogProva * dialogProva;
 	void movimientoChoqueBolas( QVector<BolaYWidget*> & );
         
 public slots:
@@ -70,6 +72,9 @@ public slots:
 	void slotDControlBolas();
 	void slotDChartColisiones();
 	void slotPieChart();
+	void slotDProva();
+	void slotCrearBola(BolaYWidget *);
+
 };
 
 #endif 

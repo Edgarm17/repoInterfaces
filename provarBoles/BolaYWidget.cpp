@@ -17,8 +17,8 @@ BolaYWidget::BolaYWidget(bool jugador, float x, float y, float vX, float vY, flo
 	
 }
 
-BolaYWidget::BolaYWidget(bool jugador, float x, float y, float vX, float vY, float radio,QImage image, QWidget * parent) :
-	 Bola(jugador,x,y,vX,vY,radio,color) , WidgetBola(this, parent)
+BolaYWidget::BolaYWidget(bool jugador, float x, float y, float vX, float vY, float radio,QImage imagen, QWidget * parent) :
+	 Bola(jugador,x,y,vX,vY,radio,imagen) , WidgetBola(this, parent)
 {
 	
 	
