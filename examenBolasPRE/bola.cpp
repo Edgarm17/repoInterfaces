@@ -7,6 +7,7 @@ int Bola::contId;
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad, QObject * parent) : QObject(parent)
 {
 	pare = NULL;
+	textoPersonalizado = false;
 	jugador = esJugador;
 	seleccionada = false;
 	mostrarTexto = false;
@@ -22,6 +23,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	imagen = QImage("./img/batman.png");
 	imagen = imagen.scaled(Bola::radio,Bola::radio);
 	mostrarImagen = false;
+	posTextoX = 0;
+	posTextoY = 0;
 	
 }
 
@@ -30,6 +33,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 {
 	pare = NULL;
 	jugador = esJugador;
+	textoPersonalizado = false;
 	mostrarTexto = false;
 	seleccionada = false;
 	colisiones = 0;
@@ -44,6 +48,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	imagen = img;
 	imagen = imagen.scaled(Bola::radio,Bola::radio);
 	mostrarImagen = true;
+	posTextoX = 0;
+	posTextoY = 0;
 	
 }
 
@@ -51,6 +57,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 {
 	pare = NULL;
 	jugador = esJugador;
+	textoPersonalizado = false;
 	mostrarTexto = false;
 	seleccionada = false;
 	colisiones = 0;
@@ -65,7 +72,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	imagen = QImage("./img/batman.png");
 	imagen = imagen.scaled(Bola::radio, Bola::radio, Qt::IgnoreAspectRatio, Qt::FastTransformation);
 	mostrarImagen = true;
-	
+	posTextoX = 0;
+	posTextoY = 0;
 }
 
 void Bola::parar(){
@@ -84,18 +92,57 @@ void Bola::pintarBola(QPainter & pintor){
 		if(seleccionada){
 			pintor.setBrush(Qt::FDiagPattern);
 			pintor.drawEllipse(x,y,radio,radio);
-			if(mostrarTexto) pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
+			if(textoPersonalizado){
+
+			}else{
+				if(mostrarTexto){
+					
+					if(mostrarTexto){
+						
+						int drawX = (posTextoX*radio)/130;
+						int drawY = (posTextoY*radio)/130;
+						pintor.drawText(x+drawX,y+drawY,QString::number(id));
+					
+					} 
+					
+				} 
+			}
+			
 			
 		}else{
 			
 			if(mostrarImagen){
 				pintor.drawImage(x,y,imagen);
-				if(mostrarTexto) pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
+				if(textoPersonalizado){
+
+				}else{
+					if(mostrarTexto){
+					
+						if(mostrarTexto){
+						
+						int drawX = (posTextoX*radio)/130;
+						int drawY = (posTextoY*radio)/130;
+						pintor.drawText(x+drawX,y+drawY,QString::number(id));
+					
+						} 
+						
+					}  
+				}
 				
 			}else{
 				pintor.setBrush(color);
 				pintor.drawEllipse(x,y,radio,radio);
-				if(mostrarTexto) pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
+				if(textoPersonalizado){
+					
+				}else{
+					if(mostrarTexto){
+						
+						int drawX = (posTextoX*radio)/130;
+						int drawY = (posTextoY*radio)/130;
+						pintor.drawText(x+drawX,y+drawY,QString::number(id));
+					
+					} 
+				}	
 				
 			}
 			
@@ -229,6 +276,13 @@ void Bola::slotTextoBola(int state){
 	}else if(state == Qt::Unchecked) {
 		mostrarTexto = false;
 	}
+
+}
+
+void Bola::slotPosicionTexto(int auxX, int auxY){
+	
+	posTextoX = auxX;
+	posTextoY = auxY;
 
 }
 

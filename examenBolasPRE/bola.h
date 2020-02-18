@@ -38,11 +38,16 @@ public:
 	Bola * pare;
 	QVector<Bola*> hijas;
 	bool mostrarTexto;
+
+	int posTextoX;
+	int posTextoY;
+	bool textoPersonalizado;
 	
 	
 public slots:
 
 	void slotTextoBola(int);
+	void slotPosicionTexto(int, int);
 
 };
 

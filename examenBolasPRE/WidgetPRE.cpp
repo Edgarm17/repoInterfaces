@@ -5,11 +5,24 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QPushButton>
+#include "widgetPosicion.h"
 WidgetPRE::WidgetPRE(Bola * bola,QWidget * parent) : QWidget(parent){
 
 	setupUi(this);
 	this->bola = bola;
 	
+	QHBoxLayout * layout = new QHBoxLayout();
+	
+	wid = new WidgetPosicion();
+
+	
+
+	layout->addWidget(wid);
+
+	this->frame->setLayout(layout);
+
+	connect(wid, SIGNAL(posicionCambiada(int,int)), bola, SLOT(slotPosicionTexto(int, int)));
+
 	connect(chBoxMostrarNum, SIGNAL(stateChanged(int)),this->bola,  SLOT(slotTextoBola(int)));
   
 	connect(rBImagen, SIGNAL(clicked()),this,  SLOT(slotPonerImagen()));
@@ -17,7 +30,9 @@ WidgetPRE::WidgetPRE(Bola * bola,QWidget * parent) : QWidget(parent){
 	connect(radioButton, SIGNAL(clicked()),this,  SLOT(slotPonerTrama()));
 	
 	
+	
 }
+
 
 
 void WidgetPRE::slotPonerImagen(){
