@@ -4,7 +4,7 @@
 
 int Bola::contId;
 
-Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad)
+Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad) 
 {
 	pare = NULL;
 	jugador = esJugador;

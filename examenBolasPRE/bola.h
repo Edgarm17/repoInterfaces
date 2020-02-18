@@ -4,7 +4,7 @@
 #include <QPainter>
 #include "PowerUp.h"
 #include <QVector>
-class Bola{
+class Bola {
 
 public:
         Bola(bool, float , float , float , float, float );

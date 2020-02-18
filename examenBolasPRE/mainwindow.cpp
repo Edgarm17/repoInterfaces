@@ -3,7 +3,6 @@
 #include <QTimer>
 #include <math.h>
 #include <QVector>
-#include "BolaYWidget.h"
 #include "bola.h"
 #include <QDebug>
 #include <QAction>
@@ -34,37 +33,46 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	/*arrancar el temporizador*/
 	connect(temporizador,SIGNAL(timeout()),this, SLOT(slotRepintar()));
 	
+
 	/*CREAR BOLAS*/
 	for(int i = 0; i<5; i++){
-		velX = 2;
-		velY = 2;
+		velX = 1;
+		velY = 1;
 		posX = rand()%800;
 		posY = rand()%600;
 		radio = 60;
-		bolas.append(new BolaYWidget(false,posX,posY,velX,velY,radio));
+		bolas.append(new Bola(false,posX,posY,velX,velY,radio));
 	}
+
+	
 	
 	posX = posY = 20;
 	
-    	jugador = new BolaYWidget(true,posX,posY,0.0,0.0,60);
+    	jugador = new Bola(true,posX,posY,0.0,0.0,60);
 	bolasTotales++;
+
+	
     	
     	setMouseTracking(true);
 	setAcceptDrops(true);
 
-	if(QSystemTrayIcon::isSystemTrayAvailable() == true ) {
-    	
-    		QIcon icon = QIcon("./img/bolasIcon.png");
-    		trayIcon = new QSystemTrayIcon(this);
-    		trayIcon->setContextMenu(menuDialogos);
-    		trayIcon->setIcon(icon);
-    		trayIcon->show();
-    		
-    	}
+	
 
 	new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_A), this, SLOT(slotMoverConRaton()));
     	crearQActions();
 	crearMenus();
+
+	if(QSystemTrayIcon::isSystemTrayAvailable() == true ) {
+	    	
+	    		QIcon icon = QIcon("./img/bolasIcon.png");
+	    		trayIcon = new QSystemTrayIcon(this);
+	    		trayIcon->setContextMenu(menuDialogos);
+	    		trayIcon->setIcon(icon);
+	    		trayIcon->show();
+	    		
+	    	}
+
+	
 }
 
 void MainWindow::crearQActions(){
@@ -74,23 +82,15 @@ void MainWindow::crearQActions(){
 
 	accionDialogSegon = new QAction("Dialogo TableView",this);
 	connect(accionDialogSegon, SIGNAL(triggered()),this, SLOT(slotDialogoTabla()));
-
+	
 	
 
 }
 
 void MainWindow::crearMenus(){
-
 	menuArchivo = menuBar()->addMenu("Archivo");
 	menuDialogos = menuBar()->addMenu("Dialogos");
-	menuBolas = menuBar()->addMenu("Bolas");
-	
-	for(int i = 0; i<bolas.size(); i++){
-		QAction * accionBola = new QAction(QString("Bola"+QString::number(i)),this);
-		accionBola->setCheckable(true);
-		menuBolas->addAction(accionBola);
-		connect(accionBola, SIGNAL(toggled(bool)),this, SLOT(slotParpadeo(bool)));
-	}
+
 
         menuDialogos ->addAction(accionDExamenTab);
         menuDialogos ->addAction(accionDialogSegon);
@@ -111,7 +111,7 @@ void MainWindow::slotDExamenTab(void){
 
 void MainWindow::slotDialogoTabla(void){
 	
-	dialogoTabla = new DialogoTabla(&bolas);
+	dialogoTabla = new DTablaPre(&bolas);
 	dialogoTabla->show();
 }
 
@@ -129,25 +129,6 @@ void MainWindow::slotMoverConRaton(void){
 
 }
 
-void MainWindow::slotParpadeo(bool state){
-	
-	QAction * accion = qobject_cast<QAction *>(sender());
-	QString texto = accion->text();
-	int num = texto.back().digitValue();
-	
-	if(state){
-		
-		qDebug() << "Parpadeo de la bola" << num << "activado";
-		bolas.at(num)->parpadeo = true;
-		
-	}else{
-		
-		qDebug() << "Parpadeo de la bola" << num << "desactivado";
-		bolas.at(num)->parpadeo = false;
-	}
-	
-	
-}
 
 void MainWindow::paintEvent(QPaintEvent *e){
 	
@@ -238,7 +219,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *e){
 	float vY = (eventoFinal->y() - eventoInicial->y()) / 50.3;
 	
 	
-	BolaYWidget * newBola = new BolaYWidget(false,pInicialX,pInicialY,vX,vY,radio);
+	Bola * newBola = new Bola(false,pInicialX,pInicialY,vX,vY,radio);
 	
 	bolas.append(newBola);
 	
@@ -252,7 +233,7 @@ void MainWindow::mouseDoubleClickEvent(QMouseEvent * e){
 	float velX = (rand()%100-50)/50.1;
 	float velY = (rand()%100-50)/50.1;
 	
-	BolaYWidget * newBola = new BolaYWidget(false,(float)mouseX,(float)mouseY,velX,velY,radio);
+	Bola * newBola = new Bola(false,(float)mouseX,(float)mouseY,velX,velY,radio);
 	bolas.append(newBola);
 }
 
@@ -304,7 +285,7 @@ void MainWindow::moverJugadorRaton(void){
 	
 }
 
-void MainWindow::movimientoChoqueBolas( QVector<BolaYWidget*> & vector){
+void MainWindow::movimientoChoqueBolas( QVector<Bola*> & vector){
 	for(int i=0; i<vector.size(); i++){
 		vector[i]->mover(height(),width());
 		
@@ -331,7 +312,7 @@ void MainWindow::movimientoChoqueBolas( QVector<BolaYWidget*> & vector){
 						radio = vector[i]->radio;
 					}
 					//qDebug()<< "Bola creada" << endl;
-					BolaYWidget * nuevaBola = new BolaYWidget(false,posX,posY,3,3,radio);
+					Bola * nuevaBola = new Bola(false,posX,posY,3,3,radio);
 					nuevaBola->mostrarImagen = false;
 					nuevaBola->pare = vector[i];
 					vector[i]->hijas.append(nuevaBola);
@@ -448,7 +429,7 @@ void MainWindow::dropEvent(QDropEvent * event){
 	float vX = (puntoSoltar.x() - puntoEntrada.x()) / 50.2;
 	float vY = (puntoSoltar.y() - puntoEntrada.y()) / 50.3;
       	
-      	BolaYWidget * nuevaBola = new BolaYWidget(false,puntoSoltar.x(),puntoSoltar.y(),vX,vY,
+      	Bola * nuevaBola = new Bola(false,puntoSoltar.x(),puntoSoltar.y(),vX,vY,
       	radio,QImage(text));
       	bolas.append(nuevaBola);
 }

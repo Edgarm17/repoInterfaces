@@ -1,29 +1,28 @@
-#ifndef DIALOGOTABLA_H
-#define DIALOGOTABLA_H
-#include "ui_DialogoTabla.h"
+#ifndef DTABLAPRE_H
+#define DTABLAPRE_H
+#include "ui_DTablaPRE.h"
 #include <QDialog>
 #include <QVariant>
 #include "bola.h"
 #include <QVector>
-#include <BolaYWidget.h>
 #include <QFile>
 class MiModelo;
 
-class DialogoTabla : public QDialog, public Ui::DialogoTabla {
+class DTablaPre : public QDialog, public Ui::DTablaPre {
 
 	Q_OBJECT
 	
 public:
 
 	
-	DialogoTabla(QVector<BolaYWidget*> *,QWidget * parent = 0);
-	QVector<BolaYWidget*> * bolas;
+	DTablaPre(QVector<Bola*> *,QWidget * parent = 0);
+	QVector<Bola*> * bolas;
 	MiModelo * modelo;
-	QFile * fichero;
+	
 	
 public slots:
 
-	void slotTablaClicked(const QModelIndex &); 
+	
 
 	
 	
@@ -35,9 +34,9 @@ class MiModelo : public QAbstractTableModel{
 
 public:
 	
-	QVector<BolaYWidget*> * bolas;
+	QVector<Bola*> * bolas;
 	
-	MiModelo(QVector<BolaYWidget*> *,QObject *parent = nullptr);
+	MiModelo(QVector<Bola*> *,QObject *parent = nullptr);
 	int rowCount(const QModelIndex &)const;
 	int columnCount(const QModelIndex &)const;
 	QVariant data(const QModelIndex &, int) const;

@@ -2,7 +2,6 @@
 #define DIALOGINFO_H
 #include "ui_DialogInfo.h"
 #include <QDialog>
-#include "BolaYWidget.h"
 #include <QVector>
 #include "bola.h"
 
@@ -13,8 +12,8 @@ class DialogInfo : public QDialog, public Ui::DialogInfo {
 public:
 
 	
-	DialogInfo(BolaYWidget * b,QWidget * parent = 0);
-	BolaYWidget * bola;
+	DialogInfo(Bola * b,QWidget * parent = 0);
+	Bola * bola;
 	
 	
 	

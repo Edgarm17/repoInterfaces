@@ -6,22 +6,22 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QAction>
-#include <BolaYWidget.h>
+#include <bola.h>
 #include <iostream>
 #include <QSystemTrayIcon>
 #include <stdio.h>
 #include <QPoint>
 #include <QVector>
 #include "DExamenTab.h"
-#include "DialogoTabla.h"
+#include "DTablaPRE.h"
 class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
         MainWindow(QWidget * parent = 0, Qt::WindowFlags flags = 0);
 
 	//ATRIBUTOS VARIOS
-	BolaYWidget * jugador;
-	QVector<BolaYWidget *> bolas;
+	Bola * jugador;
+	QVector<Bola *> bolas;
 	QVector<PowerUp*> powerUps;
 	int vidasJugador;
 	int bolasTotales;
@@ -47,12 +47,12 @@ public:
 	void crearQActions();
 	void crearMenus();
 	void performDrag();
-	void movimientoChoqueBolas( QVector<BolaYWidget*> & );
+	void movimientoChoqueBolas( QVector<Bola*> & );
 	void moverJugadorRaton(void);
 	
 	//DIÁLOGOS
 	DExamenTab * dialogTab;
-	DialogoTabla * dialogoTabla;
+	DTablaPre * dialogoTabla;
 
 	//QACTIONS
 	QAction * accionDExamenTab;
@@ -61,7 +61,7 @@ public:
 	//MENUS
 	QMenu * menuArchivo;
 	QMenu * menuDialogos;
-	QMenu * menuBolas;
+	
 
 	//EVENTOS
 	QMouseEvent * eventoInicial;
@@ -81,7 +81,7 @@ public slots:
 	void slotDExamenTab();
 	void slotDialogoTabla();
 	void slotMoverConRaton();
-	void slotParpadeo(bool);
+
 };
 
 #endif 

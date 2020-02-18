@@ -1,10 +1,9 @@
 #include "DialogInfo.h"
-#include "BolaYWidget.h"
+#include "bola.h"
 #include <QVector>
-#include "widgetBola.h"
 #include <QDebug>
 #include <QTimer>
-DialogInfo::DialogInfo(BolaYWidget * b,QWidget * parent) : QDialog(parent){
+DialogInfo::DialogInfo(Bola * b,QWidget * parent) : QDialog(parent){
 
 	setupUi(this);
 

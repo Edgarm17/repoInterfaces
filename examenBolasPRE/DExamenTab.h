@@ -2,7 +2,6 @@
 #define DEXAMENTAB_H
 #include "ui_DExamenTab.h"
 #include <QDialog>
-#include "BolaYWidget.h"
 #include <QVector>
 #include "bola.h"
 
@@ -13,8 +12,8 @@ class DExamenTab : public QDialog, public Ui::DExamenTab {
 public:
 
 	
-	DExamenTab(QVector<BolaYWidget*> *,QWidget * parent = 0);
-	QVector<BolaYWidget*> * bolas;
+	DExamenTab(QVector<Bola*> *,QWidget * parent = 0);
+	QVector<Bola*> * bolas;
 	
 	
 	
