@@ -106,6 +106,8 @@ void MainWindow::slotDExamenTab(void){
 	
 	dialogTab = new DExamenTab(&bolas);
 	dialogTab->show();
+	
+	
 }
 
 
@@ -295,7 +297,7 @@ void MainWindow::movimientoChoqueBolas( QVector<Bola*> & vector){
 		
 		
 		for(int j = 0; j<vector.size(); j++){
-			if(vector[i]->chocar(*vector[j])){
+			if(vector[i]->chocar(vector[j])){
 				vector[j]->vida-=10;
 				vector[j]->colisiones++;
 				vector[i]->vida-=10;
@@ -322,7 +324,7 @@ void MainWindow::movimientoChoqueBolas( QVector<Bola*> & vector){
 				*/
 			}
 		}
-		if(jugador->chocar(*bolas[i])){
+		if(jugador->chocar(bolas[i])){
 			jugador->vida-=10;
 			bolas[i]->vida-=10;
 		}

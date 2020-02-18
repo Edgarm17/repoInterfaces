@@ -19,12 +19,9 @@ public slots:
 	void slotPonerImagen();
 	void slotPonerColor();
 	void slotPonerTrama();
-      	
-      	void slotTextoBola(int);
-      
-signals:
+   	void slotModificarCheck(int);
+     	
 
-	void imgSelected(Bola *);
 
 };
 

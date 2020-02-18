@@ -4,19 +4,21 @@
 #include <QPainter>
 #include "PowerUp.h"
 #include <QVector>
-class Bola {
+class Bola : public QObject{
+
+	Q_OBJECT
 
 public:
-        Bola(bool, float , float , float , float, float );
-        Bola(bool, float , float , float , float, float, QImage );
-        Bola(bool, float , float , float , float, float, QColor );
+        Bola(bool, float , float , float , float, float, QObject * parent = nullptr);
+        Bola(bool, float , float , float , float, float, QImage, QObject * parent = nullptr);
+        Bola(bool, float , float , float , float, float, QColor, QObject * parent = nullptr);
 	void pintarBola(QPainter &);
 	void pintarVida(QPainter &);
 	void mover(float, float);
 	void parar();
-	bool chocar(Bola &);
+	bool chocar(Bola *);
 	float distanciaPU(float,float);
-	float calcDistancia(Bola );
+	float calcDistancia(Bola *);
 	static const int vidaInicial = 100;
 
 	int vida;
@@ -35,7 +37,7 @@ public:
 	QImage imagen;
 	Bola * pare;
 	QVector<Bola*> hijas;
-	bool parpadeo;
+	bool mostrarTexto;
 	
 	
 public slots:

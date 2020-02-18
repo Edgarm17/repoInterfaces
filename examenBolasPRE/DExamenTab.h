@@ -20,9 +20,12 @@ public:
 public slots:
 
 	
-	
+	void slotCambiarNombreBoton();
 
 
+signals:
+
+	void modificarTodosClicked(int);
 	
 	
 };

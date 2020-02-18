@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DExamenTab.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.4
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -90,7 +90,7 @@ public:
         DExamenTab->setWindowTitle(QApplication::translate("DExamenTab", "Dialog", nullptr));
         tabla->setTabText(tabla->indexOf(tab), QApplication::translate("DExamenTab", "Tab 1", nullptr));
         tabla->setTabText(tabla->indexOf(tab_2), QApplication::translate("DExamenTab", "Tab 2", nullptr));
-        pushButton->setText(QApplication::translate("DExamenTab", "PushButton", nullptr));
+        pushButton->setText(QApplication::translate("DExamenTab", "Show all numbers", nullptr));
     } // retranslateUi
 
 };

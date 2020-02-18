@@ -4,17 +4,19 @@
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QDebug>
+#include <QPushButton>
 WidgetPRE::WidgetPRE(Bola * bola,QWidget * parent) : QWidget(parent){
 
 	setupUi(this);
 	this->bola = bola;
 	
-	connect(chBoxMostrarNum, SIGNAL(stateChanged(int)),
-      	           this,  SLOT(slotTextoBola(int)));
-	
+	connect(chBoxMostrarNum, SIGNAL(stateChanged(int)),this->bola,  SLOT(slotTextoBola(int)));
+  
 	connect(rBImagen, SIGNAL(clicked()),this,  SLOT(slotPonerImagen()));
 	connect(rBColor, SIGNAL(clicked()),this,  SLOT(slotPonerColor()));
 	connect(radioButton, SIGNAL(clicked()),this,  SLOT(slotPonerTrama()));
+	
+	
 }
 
 
@@ -44,6 +46,37 @@ void WidgetPRE::slotPonerTrama(){
 
 }
 
-void WidgetPRE::slotTextoBola(int state){
-	emit imgSelected(this->bola);
+void WidgetPRE::slotModificarCheck(int state){
+
+	
+	
+	if(state == 0){
+	
+		chBoxMostrarNum->setCheckState(Qt::Unchecked);
+		
+	}else{
+	
+		chBoxMostrarNum->setCheckState(Qt::Checked);
+		
+	}
+	
+	
+	
+	
+	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -41,7 +41,7 @@
    <item>
     <widget class="QPushButton" name="pushButton">
      <property name="text">
-      <string>PushButton</string>
+      <string>Show all numbers</string>
      </property>
     </widget>
    </item>

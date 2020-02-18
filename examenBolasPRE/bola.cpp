@@ -1,15 +1,15 @@
 #include "bola.h"
 #include <math.h>
 #include <QPainter>
-
+#include <QDebug>
 int Bola::contId;
 
-Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad) 
+Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad, QObject * parent) : QObject(parent)
 {
 	pare = NULL;
 	jugador = esJugador;
 	seleccionada = false;
-	parpadeo = false;
+	mostrarTexto = false;
 	colisiones = 0;
 	id = contId ++;
 	x = posX;
@@ -26,11 +26,11 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 }
 
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad,
-	QImage img)
+	QImage img, QObject * parent) : QObject(parent)
 {
 	pare = NULL;
 	jugador = esJugador;
-	parpadeo = false;
+	mostrarTexto = false;
 	seleccionada = false;
 	colisiones = 0;
 	id = contId ++;
@@ -47,12 +47,11 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	
 }
 
-Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad, QColor col) :
-	 Bola(esJugador,posX,posY,velX,velY,radio)
+Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad, QColor col, QObject * parent ) : QObject(parent)
 {
 	pare = NULL;
 	jugador = esJugador;
-	parpadeo = false;
+	mostrarTexto = false;
 	seleccionada = false;
 	colisiones = 0;
 	id = contId ++;
@@ -65,7 +64,6 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	color = col;
 	imagen = QImage("./img/batman.png");
 	imagen = imagen.scaled(Bola::radio, Bola::radio, Qt::IgnoreAspectRatio, Qt::FastTransformation);
-	//imagen.scaled(Bola::radio/2,Bola::radio/2);
 	mostrarImagen = true;
 	
 }
@@ -81,23 +79,24 @@ void Bola::pintarBola(QPainter & pintor){
 
 	if(jugador){
 		pintor.drawImage(x,y,imagen);
-		//pintor.setBrush((QBrush(Qt::black)));
-		//pintor.setPen(Qt::red);
-		//pintor.drawEllipse(x,y,radio,radio);
+		
 	}else{
 		if(seleccionada){
 			pintor.setBrush(Qt::FDiagPattern);
 			pintor.drawEllipse(x,y,radio,radio);
+			if(mostrarTexto) pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
 			
 		}else{
 			
 			if(mostrarImagen){
 				pintor.drawImage(x,y,imagen);
+				if(mostrarTexto) pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
 				
 			}else{
 				pintor.setBrush(color);
 				pintor.drawEllipse(x,y,radio,radio);
-				pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
+				if(mostrarTexto) pintor.drawText(x+radio+3,y+radio+3,QString::number(id));
+				
 			}
 			
 		}
@@ -151,7 +150,7 @@ void Bola::mover(float altura, float anchura){
     	y = y + vY;
 }
 
-bool Bola::chocar(Bola & otra){
+bool Bola::chocar(Bola * otra){
 	
 	bool choque = false;
 	
@@ -159,28 +158,18 @@ bool Bola::chocar(Bola & otra){
 	Bola * derecha;
 	Bola * arriba;
 	Bola * abajo;
-	//Bola * grande;
-	//Bola * pequena;
-	
-	//if(radio >= otra.radio){
-	//	grande = this;
-	//pequena = &otra;
-	//}else{
-	//	grande = &otra;
-	//	pequena = this;
-	//}
 	
 
-	if(calcDistancia(otra) > (radio+otra.radio)/2) return false;
+	if(calcDistancia(otra) > (radio+otra->radio)/2) return false;
 	
 	/* CHOQUE HORIZONTAL*/
 	
-	if(otra.x > x){
-		derecha = &otra;
+	if(otra->x > x){
+		derecha = otra;
 		izquierda = this;
 	}else{
 		derecha = this;
-		izquierda = &otra;
+		izquierda = otra;
 	}
 	
 	
@@ -193,11 +182,11 @@ bool Bola::chocar(Bola & otra){
 	
 	/*CHOQUE VERTICAL*/
 	
-	if(otra.y > y){
-		abajo = &otra;
+	if(otra->y > y){
+		abajo = otra;
 		arriba = this;
 	}else{
-		arriba = &otra;
+		arriba = otra;
 		abajo = this;
 	}
 	
@@ -225,15 +214,21 @@ float Bola::distanciaPU(float posX, float posY){
 	
 }
 
-float Bola::calcDistancia(Bola otra){
+float Bola::calcDistancia(Bola * otra){
 	float distancia;
 	
-	distancia = sqrtf((powf(otra.x - x,2))+(powf(otra.y - y,2)));
+	distancia = sqrtf((powf(otra->x - x,2))+(powf(otra->y - y,2)));
 	
 	return distancia;
 }
 
 void Bola::slotTextoBola(int state){
+
+	if(state == Qt::Checked){
+		mostrarTexto = true;
+	}else if(state == Qt::Unchecked) {
+		mostrarTexto = false;
+	}
 
 }
 
