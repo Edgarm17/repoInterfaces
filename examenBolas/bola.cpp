@@ -6,10 +6,9 @@ int Bola::contId;
 
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad) 
 {
-	pare = NULL;
+
 	jugador = esJugador;
 	seleccionada = false;
-	parpadeo = false;
 	colisiones = 0;
 	id = contId ++;
 	x = posX;
@@ -28,9 +27,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad,
 	QImage img)
 {
-	pare = NULL;
+
 	jugador = esJugador;
-	parpadeo = false;
 	seleccionada = false;
 	colisiones = 0;
 	id = contId ++;
@@ -50,9 +48,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, float rad, QColor col) :
 	 Bola(esJugador,posX,posY,velX,velY,radio)
 {
-	pare = NULL;
+
 	jugador = esJugador;
-	parpadeo = false;
 	seleccionada = false;
 	colisiones = 0;
 	id = contId ++;
@@ -65,8 +62,7 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 	color = col;
 	imagen = QImage("./img/batman.png");
 	imagen = imagen.scaled(Bola::radio, Bola::radio, Qt::IgnoreAspectRatio, Qt::FastTransformation);
-	//imagen.scaled(Bola::radio/2,Bola::radio/2);
-	mostrarImagen = true;
+	mostrarImagen = false;
 	
 }
 
@@ -159,16 +155,6 @@ bool Bola::chocar(Bola & otra){
 	Bola * derecha;
 	Bola * arriba;
 	Bola * abajo;
-	//Bola * grande;
-	//Bola * pequena;
-	
-	//if(radio >= otra.radio){
-	//	grande = this;
-	//pequena = &otra;
-	//}else{
-	//	grande = &otra;
-	//	pequena = this;
-	//}
 	
 
 	if(calcDistancia(otra) > (radio+otra.radio)/2) return false;
@@ -233,9 +219,7 @@ float Bola::calcDistancia(Bola otra){
 	return distancia;
 }
 
-void Bola::slotTextoBola(int state){
 
-}
 
 
 

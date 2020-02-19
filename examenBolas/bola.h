@@ -2,7 +2,6 @@
 #define BOLA_H
 
 #include <QPainter>
-#include "PowerUp.h"
 #include <QVector>
 class Bola {
 
@@ -33,14 +32,14 @@ public:
 	bool mostrarImagen;
 	QColor color;
 	QImage imagen;
-	Bola * pare;
-	QVector<Bola*> hijas;
-	bool parpadeo;
+
+
+
 	
 	
 public slots:
 
-	void slotTextoBola(int);
+
 
 };
 
