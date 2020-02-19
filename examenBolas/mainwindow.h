@@ -9,7 +9,13 @@
 #include <stdio.h>
 #include <QPoint>
 #include <QVector>
-#include "DialogoUno.h"
+#include <QList>
+#include "WidgetInfo.h"
+#include <QStatusBar>
+#include <QPushButton>
+#include <QSlider>
+#include <QComboBox>
+
 class MainWindow : public QMainWindow {
 Q_OBJECT
 public:
@@ -19,6 +25,9 @@ public:
 
 	QVector<Bola *> bolas;
 	int bolasTotales;
+	int intervaloRepintar;
+	
+	QTimer * temporizador;
 	
 	//POSICION, VELOCIDAD Y RADIO DE LAS BOLAS
         float posX;
@@ -32,11 +41,22 @@ public:
 	void crearMenus();
 	void movimientoChoqueBolas( QVector<Bola*> & );
 	
-	//DIÁLOGOS
-	DialogoUno * dialog;
+	//BARRA DE ESTADO
+	
+	QStatusBar * barraEstadoFIN;
+	
+	//WIDGETS BARRA
+	QComboBox * comboBarraFIN;
+	QPushButton * botonBarraFIN;
+	QSlider * sliderBarraFIN;
+	
+	//WIDGETS
+	
+	WidgetInfo * widgetFIN;
+	QList<WidgetInfo*> listaWidgetsFIN;
 
 	//QACTIONS
-	QAction * accionDialogoUno;
+	QAction * accionWidgetFIN;
 
 	//MENUS
 	QMenu * menuExamen;
@@ -50,7 +70,11 @@ public:
         
 public slots:
 
+	void slotWidgetFIN();
+	void slotNuevoWidgetFIN(int,bool);
+	void slotVelocidadBolas(int);
 	void slotRepintar();
+	
 
 };
 

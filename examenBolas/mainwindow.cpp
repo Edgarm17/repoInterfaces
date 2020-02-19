@@ -13,13 +13,13 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	
 	resize(800,600);
 	
-	
+	intervaloRepintar = 10;
 	
 	bolasTotales = 0;
 
-	QTimer * temporizador = new QTimer();
+	temporizador = new QTimer();
 	/*programar el temporizador*/
-	temporizador->setInterval(10);
+	temporizador->setInterval(intervaloRepintar);
 	temporizador->setSingleShot(false);
 	temporizador->start();
 	/*arrancar el temporizador*/
@@ -37,7 +37,24 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	}
 
 	
-
+	barraEstadoFIN = new QStatusBar();
+	QLabel * label = new QLabel("Ventana a cerrar");
+	comboBarraFIN = new QComboBox();
+	botonBarraFIN = new QPushButton();
+	sliderBarraFIN = new QSlider();
+	sliderBarraFIN->setOrientation(Qt::Horizontal);
+	sliderBarraFIN->setRange(1,20);
+	sliderBarraFIN->setInvertedAppearance(true);
+	sliderBarraFIN->setInvertedControls(true);
+	
+	connect(sliderBarraFIN,SIGNAL(sliderMoved(int)),this,SLOT(slotVelocidadBolas(int)));
+	
+	barraEstadoFIN->addWidget(label);
+	barraEstadoFIN->addWidget(comboBarraFIN);
+	barraEstadoFIN->addWidget(botonBarraFIN);
+	barraEstadoFIN->addWidget(sliderBarraFIN);
+	
+	setStatusBar(barraEstadoFIN);
 	
     	
     	setMouseTracking(true);
@@ -50,10 +67,14 @@ MainWindow::MainWindow(QWidget * parent ,Qt::WindowFlags flags ) : QMainWindow(p
 	
 }
 
+void MainWindow::slotVelocidadBolas(int value){
+	temporizador->setInterval(value);
+}
+
 void MainWindow::crearQActions(){
 	
-	accionDialogoUno = new QAction("Dialogo Uno",this);
-	//connect(acionDialogoUno, SIGNAL(triggered()),this, SLOT());
+	accionWidgetFIN = new QAction("Widget info",this);
+	connect(accionWidgetFIN, SIGNAL(triggered()),this, SLOT(slotWidgetFIN()));
 
 
 }
@@ -62,7 +83,7 @@ void MainWindow::crearMenus(){
 
 
 	menuExamen = menuBar()->addMenu("Examen");
-	menuExamen->addAction(accionDialogoUno);
+	menuExamen->addAction(accionWidgetFIN);
 
 }
 
@@ -96,9 +117,9 @@ void MainWindow::movimientoChoqueBolas( QVector<Bola*> & vector){
 		for(int j = 0; j<vector.size(); j++){
 			if(vector[i]->chocar(*vector[j])){
 				vector[j]->vida-=10;
-				vector[j]->colisiones++;
+				vector[j]->colisionesBolas++;
 				vector[i]->vida-=10;
-				vector[i]->colisiones++;
+				vector[i]->colisionesBolas++;
 				
 			}
 		}
@@ -128,8 +149,48 @@ void MainWindow::slotRepintar(void){
 	movimientoChoqueBolas(bolas);
 	
 	
-	
 }
+
+
+
+void MainWindow::slotWidgetFIN(){
+
+	widgetFIN = new WidgetInfo(bolas.at(0));
+	widgetFIN->show();
+	widgetFIN->setAttribute(Qt::WA_DeleteOnClose);
+	listaWidgetsFIN.append(widgetFIN);
+	
+	connect(widgetFIN, SIGNAL(botonNuevoWidgetClicked(int,bool)),this,SLOT(slotNuevoWidgetFIN(int,bool)));
+}
+
+void MainWindow::slotNuevoWidgetFIN(int numBola,bool nextOPrev){
+	
+	
+	if(nextOPrev){
+		if(numBola == 4)return;
+		WidgetInfo * widgetNext = new WidgetInfo(bolas.at(numBola+1));
+		widgetNext->setAttribute(Qt::WA_DeleteOnClose);
+		widgetNext->show();
+		connect(widgetNext, SIGNAL(botonNuevoWidgetClicked(int,bool)),this,SLOT(slotNuevoWidgetFIN(int,bool)));
+		listaWidgetsFIN.append(widgetNext);
+		
+
+	
+		
+	}else{
+		if(numBola == 0)return;
+		WidgetInfo * widgetPrev = new WidgetInfo(bolas.at(numBola-1));
+		widgetPrev->show();
+		widgetPrev->setAttribute(Qt::WA_DeleteOnClose);
+		connect(widgetPrev, SIGNAL(botonNuevoWidgetClicked(int,bool)),this,SLOT(slotNuevoWidgetFIN(int,bool)));
+		listaWidgetsFIN.append(widgetPrev);
+		
+		
+	}
+	
+
+}
+
 
 
 

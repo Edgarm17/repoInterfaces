@@ -21,7 +21,8 @@ public:
 	int vida;
 	static int contId;
 	int id;
-	int colisiones;
+	int colisionesBolas;
+	int colisionesPared;
         float x;
 	float y;
 	float vX;

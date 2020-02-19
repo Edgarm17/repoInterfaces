@@ -9,7 +9,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 
 	jugador = esJugador;
 	seleccionada = false;
-	colisiones = 0;
+	colisionesBolas = 0;
+	colisionesPared = 0;
 	id = contId ++;
 	x = posX;
 	y = posY;
@@ -30,7 +31,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 
 	jugador = esJugador;
 	seleccionada = false;
-	colisiones = 0;
+	colisionesBolas = 0;
+	colisionesPared = 0;
 	id = contId ++;
 	x = posX;
 	y = posY;
@@ -51,7 +53,8 @@ Bola::Bola(bool esJugador,float  posX, float  posY, float velX, float velY, floa
 
 	jugador = esJugador;
 	seleccionada = false;
-	colisiones = 0;
+	colisionesBolas = 0;
+	colisionesPared = 0;
 	id = contId ++;
 	x = posX;
 	y = posY;
@@ -125,10 +128,12 @@ void Bola::mover(float altura, float anchura){
     	
     	if(x > anchura-radio){
     		vX = -fabs(vX);
+    		colisionesPared++;
     	}
     	
     	if(x <= 0 ){
     		vX = fabs(vX);
+    		colisionesPared++;
     	}
     	
     	x = x + vX;
@@ -138,10 +143,12 @@ void Bola::mover(float altura, float anchura){
     	
     	if(y > altura-radio){
     		vY = -fabs(vY);
+    		colisionesPared++;
     	}
     	
     	if(y <= 20 ){
     		vY = fabs(vY);
+    		colisionesPared++;
     	}
     	
     	y = y + vY;
